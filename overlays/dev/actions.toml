@@ -1,6 +1,4 @@
-tag = "dojo_starter-actions"
+tag = "lsrender-main"
 writes = [
-    "dojo_starter-Moves",
-    "dojo_starter-Position",
-    "dojo_starter-DirectionsAvailable",
+  "lsrender-Config",
 ]
