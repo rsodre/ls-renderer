@@ -1,0 +1,529 @@
+[
+  {
+    "type": "impl",
+    "name": "ContractImpl",
+    "interface_name": "dojo::contract::contract::IContract"
+  },
+  {
+    "type": "struct",
+    "name": "core::byte_array::ByteArray",
+    "members": [
+      {
+        "name": "data",
+        "type": "core::array::Array::<core::bytes_31::bytes31>"
+      },
+      {
+        "name": "pending_word",
+        "type": "core::felt252"
+      },
+      {
+        "name": "pending_word_len",
+        "type": "core::integer::u32"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "dojo::contract::contract::IContract",
+    "items": [
+      {
+        "type": "function",
+        "name": "contract_name",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "namespace",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "tag",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "name_hash",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::felt252"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "namespace_hash",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::felt252"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "selector",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::felt252"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "WorldProviderImpl",
+    "interface_name": "dojo::world::world_contract::IWorldProvider"
+  },
+  {
+    "type": "struct",
+    "name": "dojo::world::world_contract::IWorldDispatcher",
+    "members": [
+      {
+        "name": "contract_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "dojo::world::world_contract::IWorldProvider",
+    "items": [
+      {
+        "type": "function",
+        "name": "world",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "dojo::world::world_contract::IWorldDispatcher"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "MainImpl",
+    "interface_name": "lsrender::systems::main::IMain"
+  },
+  {
+    "type": "struct",
+    "name": "core::integer::u256",
+    "members": [
+      {
+        "name": "low",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "high",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::stats::Stats",
+    "members": [
+      {
+        "name": "strength",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "dexterity",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "vitality",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "intelligence",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "wisdom",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "charisma",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "luck",
+        "type": "core::integer::u8"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::item::Item",
+    "members": [
+      {
+        "name": "id",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "xp",
+        "type": "core::integer::u16"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::equipment::Equipment",
+    "members": [
+      {
+        "name": "weapon",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "chest",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "head",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "waist",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "foot",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "hand",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "neck",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "ring",
+        "type": "adventurer::item::Item"
+      }
+    ]
+  },
+  {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::adventurer::Adventurer",
+    "members": [
+      {
+        "name": "health",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "xp",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "gold",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "beast_health",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "stat_upgrades_available",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "stats",
+        "type": "adventurer::stats::Stats"
+      },
+      {
+        "name": "equipment",
+        "type": "adventurer::equipment::Equipment"
+      },
+      {
+        "name": "battle_action_count",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "mutated",
+        "type": "core::bool"
+      },
+      {
+        "name": "awaiting_item_specials",
+        "type": "core::bool"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::adventurer_meta::AdventurerMetadata",
+    "members": [
+      {
+        "name": "birth_date",
+        "type": "core::integer::u64"
+      },
+      {
+        "name": "death_date",
+        "type": "core::integer::u64"
+      },
+      {
+        "name": "level_seed",
+        "type": "core::integer::u64"
+      },
+      {
+        "name": "item_specials_seed",
+        "type": "core::integer::u16"
+      },
+      {
+        "name": "rank_at_death",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "delay_stat_reveal",
+        "type": "core::bool"
+      },
+      {
+        "name": "golden_token_id",
+        "type": "core::integer::u8"
+      },
+      {
+        "name": "launch_tournament_winner_token_id",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "adventurer::bag::Bag",
+    "members": [
+      {
+        "name": "item_1",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_2",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_3",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_4",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_5",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_6",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_7",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_8",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_9",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_10",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_11",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_12",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_13",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_14",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "item_15",
+        "type": "adventurer::item::Item"
+      },
+      {
+        "name": "mutated",
+        "type": "core::bool"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "lsrender::systems::main::IMain",
+    "items": [
+      {
+        "type": "function",
+        "name": "token_uri",
+        "inputs": [
+          {
+            "name": "adventurer_id",
+            "type": "core::integer::u256"
+          },
+          {
+            "name": "adventurer",
+            "type": "adventurer::adventurer::Adventurer"
+          },
+          {
+            "name": "adventurer_name",
+            "type": "core::felt252"
+          },
+          {
+            "name": "adventurerMetadata",
+            "type": "adventurer::adventurer_meta::AdventurerMetadata"
+          },
+          {
+            "name": "bag",
+            "type": "adventurer::bag::Bag"
+          },
+          {
+            "name": "item_specials_seed",
+            "type": "core::integer::u16"
+          },
+          {
+            "name": "rank_at_death",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "current_rank",
+            "type": "core::integer::u8"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "IDojoInitImpl",
+    "interface_name": "lsrender::systems::main::main::IDojoInit"
+  },
+  {
+    "type": "interface",
+    "name": "lsrender::systems::main::main::IDojoInit",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_init",
+        "inputs": [],
+        "outputs": [],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "UpgradableImpl",
+    "interface_name": "dojo::contract::upgradeable::IUpgradeable"
+  },
+  {
+    "type": "interface",
+    "name": "dojo::contract::upgradeable::IUpgradeable",
+    "items": [
+      {
+        "type": "function",
+        "name": "upgrade",
+        "inputs": [
+          {
+            "name": "new_class_hash",
+            "type": "core::starknet::class_hash::ClassHash"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::contract::upgradeable::upgradeable::Upgraded",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "class_hash",
+        "type": "core::starknet::class_hash::ClassHash",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::contract::upgradeable::upgradeable::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "Upgraded",
+        "type": "dojo::contract::upgradeable::upgradeable::Upgraded",
+        "kind": "nested"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "lsrender::systems::main::main::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "UpgradeableEvent",
+        "type": "dojo::contract::upgradeable::upgradeable::Event",
+        "kind": "nested"
+      }
+    ]
+  }
+]

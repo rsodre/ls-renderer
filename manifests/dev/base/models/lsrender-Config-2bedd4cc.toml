@@ -1,0 +1,17 @@
+kind = "DojoModel"
+class_hash = "0x2795dd4c7a859099d9968bd7c93643f43ab6db746fc6f1db2a8941818b5d3ac"
+original_class_hash = "0x2795dd4c7a859099d9968bd7c93643f43ab6db746fc6f1db2a8941818b5d3ac"
+abi = "manifests/dev/base/abis/models/lsrender-Config-2bedd4cc.json"
+tag = "lsrender-Config"
+qualified_path = "lsrender::models::models::config"
+manifest_name = "lsrender-Config-2bedd4cc"
+
+[[members]]
+name = "key"
+type = "u8"
+key = true
+
+[[members]]
+name = "version"
+type = "Version"
+key = false

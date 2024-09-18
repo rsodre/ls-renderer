@@ -1,0 +1,11 @@
+kind = "DojoContract"
+class_hash = "0x3428f62f55a92c28c2a60882af87c90ac39a30f635c38bcb8af3b85340c787f"
+original_class_hash = "0x3428f62f55a92c28c2a60882af87c90ac39a30f635c38bcb8af3b85340c787f"
+base_class_hash = "0x0"
+abi = "manifests/dev/base/abis/contracts/lsrender-main-19840261.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "lsrender-main"
+systems = []
+manifest_name = "lsrender-main-19840261"
