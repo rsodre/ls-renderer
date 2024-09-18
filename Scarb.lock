@@ -2,6 +2,31 @@
 version = 1
 
 [[package]]
+name = "adventurer"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+dependencies = [
+ "beasts",
+ "combat",
+ "loot",
+ "market",
+ "obstacles",
+]
+
+[[package]]
+name = "beasts"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+dependencies = [
+ "combat",
+]
+
+[[package]]
+name = "combat"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+
+[[package]]
 name = "dojo"
 version = "1.0.0-alpha.4"
 source = "git+https://github.com/dojoengine/dojo?tag=v1.0.0-alpha.12#b391948911356cbf8a91daa93314809c87411098"
@@ -15,8 +40,41 @@ version = "1.0.0-alpha.4"
 source = "git+https://github.com/dojoengine/dojo?rev=f15def33#f15def330c0d099e79351d11c197f63e8cc1ff36"
 
 [[package]]
+name = "graffiti"
+version = "0.1.0"
+source = "git+https://github.com/ponderingdemocritus/graffiti?rev=bc569531791dbc71c6cd8d9bc154c34eedad31fe#bc569531791dbc71c6cd8d9bc154c34eedad31fe"
+
+[[package]]
+name = "loot"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+dependencies = [
+ "combat",
+]
+
+[[package]]
 name = "lsrender"
 version = "0.1.0"
 dependencies = [
+ "adventurer",
  "dojo",
+ "graffiti",
+ "loot",
+]
+
+[[package]]
+name = "market"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+dependencies = [
+ "combat",
+ "loot",
+]
+
+[[package]]
+name = "obstacles"
+version = "0.1.0"
+source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
+dependencies = [
+ "combat",
 ]

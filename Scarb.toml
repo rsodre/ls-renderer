@@ -12,5 +12,8 @@ migrate = "sozo build && sozo migrate apply"
 
 [dependencies]
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v1.0.0-alpha.12" }
+graffiti = { git = "https://github.com/ponderingdemocritus/graffiti", rev = "bc569531791dbc71c6cd8d9bc154c34eedad31fe" }
+adventurer = { git = "https://github.com/Provable-Games/loot-survivor", rev = "598ab8b7184bac6c7d486e884e879606909d4e33" }
+loot = { git = "https://github.com/Provable-Games/loot-survivor", rev = "598ab8b7184bac6c7d486e884e879606909d4e33" }
 
 [[target.dojo]]

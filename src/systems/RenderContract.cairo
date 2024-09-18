@@ -1,10 +1,12 @@
-use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+// from:
+// https://github.com/Provable-Games/loot-survivor/blob/598ab8b7184bac6c7d486e884e879606909d4e33/contracts/game/src/game/RenderContract.cairo
+
 use adventurer::{adventurer::{Adventurer}, adventurer_meta::{AdventurerMetadata}, bag::{Bag}};
 
-#[dojo::interface]
-trait IMain {
+#[starknet::interface]
+trait IRenderContract<TContractState> {
     fn token_uri(
-        ref world: IWorldDispatcher,
+        self: @TContractState,
         adventurer_id: u256,
         adventurer: Adventurer,
         adventurer_name: felt252,
@@ -16,18 +18,18 @@ trait IMain {
     ) -> ByteArray;
 }
 
-#[dojo::contract]
-mod main {
-    use super::{IMain, WORLD};
-    use starknet::{ContractAddress, get_caller_address};
+#[starknet::contract]
+mod RenderContract {
     use adventurer::{adventurer::{Adventurer}, adventurer_meta::{AdventurerMetadata}, bag::{Bag}};
-    use lsrender::models::models::{Config};
-    use lsrender::renderers::v0;
+    use game::game::renderer::{create_metadata};
+
+    #[storage]
+    struct Storage {}
 
     #[abi(embed_v0)]
-    impl MainImpl of IMain<ContractState> {
+    impl Render of super::IRenderContract<ContractState> {
         fn token_uri(
-            ref world: IWorldDispatcher,
+            self: @ContractState,
             adventurer_id: u256,
             adventurer: Adventurer,
             adventurer_name: felt252,
@@ -37,8 +39,7 @@ mod main {
             rank_at_death: u8,
             current_rank: u8,
         ) -> ByteArray {
-            WORLD(world);
-            v0::create_metadata(
+            create_metadata(
                 adventurer_id.try_into().unwrap(),
                 adventurer,
                 adventurer_name,
@@ -51,7 +52,3 @@ mod main {
         }
     }
 }
-
-// consumes an IWorldDispatcher to avoid unused variable warnings
-#[inline(always)]
-fn WORLD(_world: IWorldDispatcher) {}
