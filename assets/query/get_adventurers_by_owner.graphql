@@ -1,0 +1,48 @@
+  fragment AdventurerFields on Adventurer {
+  id
+  owner
+  entropy
+  name
+  health
+  strength
+  dexterity
+  vitality
+  intelligence
+  wisdom
+  charisma
+  luck
+  xp
+  weapon
+  chest
+  head
+  waist
+  foot
+  hand
+  neck
+  ring
+  beastHealth
+  statUpgrades
+  birthDate
+  deathDate
+  goldenTokenId
+  customRenderer
+  battleActionCount
+  gold
+  createdTime
+  lastUpdatedTime
+  timestamp
+  }
+  query get_adventurers_by_owner(
+    $owner: HexValue
+    $skip: Int
+    $health: FeltValue
+  ) {
+    adventurers(
+      where: { owner: { eq: $owner }, health: { gte: $health } }
+      limit: 10
+      skip: $skip
+      orderBy: { id: { asc: true } }
+    ) {
+      ...AdventurerFields
+    }
+  }
