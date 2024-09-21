@@ -88,10 +88,16 @@ export const useUriToMetadata = (token_id: BigNumberish, uri: string) => {
 
   const { name, description, image, attributes: rawAttributes } = metadata
 
-  const attributes = useMemo(() => rawAttributes?.reduce((acc: Attributes, attr: any) => {
-    acc[attr.trait] = attr.value
-    return acc
-  }, {} as Attributes), [rawAttributes])
+  const attributes = useMemo(() => {
+    const attrs = rawAttributes?.reduce((acc: Attributes, attr: any) => {
+      acc[attr.trait] = attr.value
+      return acc
+    }, {} as Attributes)
+    return {
+      'Token Id': `#${token_id}`,
+      ...attrs,
+    }
+  }, [rawAttributes])
 
   // const svg = useMemo(() => decodeBase64(image), [image])
   // console.log(image, svg)
@@ -101,7 +107,7 @@ export const useUriToMetadata = (token_id: BigNumberish, uri: string) => {
     tokenExists: Boolean(name),
     token_id,
     uri,
-    name: name ?? `Karat #${token_id}`,
+    name: name ?? `Adventurer #${token_id}...`,
     description,
     attributes,
     image,

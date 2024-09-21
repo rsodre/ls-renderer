@@ -11,6 +11,5 @@ export function createClientComponents({
   return {
     ...contractComponents,
     Config: overridableComponent(contractComponents.Config),
-    Seed: overridableComponent(contractComponents.Seed),
   };
 }

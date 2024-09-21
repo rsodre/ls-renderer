@@ -1,0 +1,84 @@
+#!/bin/bash
+set -e
+source scripts/setup.sh
+
+#-----------------
+# env setup
+#
+export MANIFEST_FILE_PATH="./manifests/$PROFILE/deployment/manifest.json"
+export CLIENT_PATH="../client/src/dojo/generated"
+export CLIENT_PROFILE_PATH="$CLIENT_PATH/$PROFILE"
+export BINDINGS_PATH="./bindings/typescript"
+
+# echo "------------------------------------------------------------------------------"
+echo "MANIFEST_FILE_PATH: $MANIFEST_FILE_PATH"
+echo "BINDINGS_PATH: $BINDINGS_PATH"
+echo "CLIENT_PATH: $CLIENT_PATH"
+echo "CLIENT_PROFILE_PATH: $CLIENT_PROFILE_PATH"
+
+if [[
+  -z "$PROFILE" ||
+  -z "$MANIFEST_FILE_PATH" ||
+  "$WORLD_ADDRESS" != "0x"* ||
+  "$RPC_URL" != "http"*
+]]; then
+  echo "! Missing data 👎"
+  exit 1
+fi
+
+#-----------------
+# build
+#
+# if [[ "$PROFILE" != "dev" ]]; then
+  echo "------------------------------------------------------------------------------"
+  echo "Cleaning..."
+  sozo -P $PROFILE clean
+  echo "Building..."
+  # sozo -P $PROFILE build --typescript
+  sozo -P $PROFILE build
+# fi
+
+#-----------------
+# migrate
+#
+echo "------------------------------------------------------------------------------"
+echo ">>> Migrate plan..."
+sozo -P $PROFILE migrate plan --world $WORLD_ADDRESS
+# exit 0
+echo ">>> Migrate apply..."
+sozo -P $PROFILE migrate apply --world $WORLD_ADDRESS -vvv
+echo "👍"
+
+#-----------------
+# auth write
+#
+# scripts/default_auth.sh $PROFILE
+
+
+#------------------------
+# copy manifest to client
+#
+echo "------------------------------------------------------------------------------"
+echo ">>> Copying manifest [$MANIFEST_FILE_PATH] to [$CLIENT_PROFILE_PATH/]"
+mkdir -p $CLIENT_PROFILE_PATH
+cp $MANIFEST_FILE_PATH $CLIENT_PROFILE_PATH/
+
+#------------------------
+# generate components
+#
+if [[ "$PROFILE" == "dev" ]]; then
+  # echo "------------------------------------------------------------------------------"
+  # echo ">>> Copying bindings [$BINDINGS_PATH] to [$CLIENT_PATH/]"
+  # # generate and copy bindings
+  # cp $BINDINGS_PATH/* $CLIENT_PATH/
+  echo "------------------------------------------------------------------------------"
+  echo ">>> Generate sources..."
+  cd ../client
+  npm run create-components --profile=$PROFILE $RPC_URL $WORLD_ADDRESS
+fi
+
+# list copied files
+ls -ld $CLIENT_PATH/* | grep -E 'ts|json'
+
+#------------------
+echo "--- DONE! 👍"

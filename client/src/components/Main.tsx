@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Grid, Button } from "semantic-ui-react";
 import { MetadataProvider } from "../hooks/MetadataContext";
 import { useAccount } from "@starknet-react/core";
@@ -6,7 +6,7 @@ import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
 import { useAdventurersByOwner, useAdventurersByOwnerCount } from "../hooks/useLootSurvivorQuery";
 import { TokenSet, useStateContext } from "../hooks/StateContext";
 import { goToTokenPage } from "../utils/karat";
-import Token from "./Token";
+import { Token, TokenSkuller } from "./Token";
 import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
 import InfoPanel from "./InfoPanel";
@@ -70,23 +70,26 @@ function SingleTokenTab({
 }: {
   tokenCount: number
 }) {
-  // const { tokenId } = useStateContext();
-  // const { adventurer } = adventurerByIdQuery(tokenId)
-
-  // const pageIndex = useMemo(() => adventurers.findIndex(adventurer => bigintEquals(adventurer.id, tokenId)), [tokenSetIds, tokenId])
-  // const _changePage = (newPageIndex: number) => {
-  //   let tokenId = tokenSetIds[newPageIndex] ?? 1
-  //   goToTokenPage(Number(tokenId));
-  // }
-
+  const [simulated, setSimulated] = useState(false)
   return (
     <>
-      <Token />
-      {/* <Navigation
-        pageCount={tokenCount}
-        pageIndex={pageIndex}
-        onPageChange={_changePage}
-      /> */}
+      <Grid>
+        <Row columns={'equal'}>
+          <Col>
+            <Button fluid secondary toggle active={!simulated} onClick={() => setSimulated(false)}>
+              {`on-chain`}
+            </Button>
+          </Col>
+          <Col>
+            <Button fluid secondary toggle active={simulated} onClick={() => setSimulated(true)}>
+              {`SKULLER`}
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+
+      {!simulated && <Token />}
+      {simulated && <TokenSkuller />}
     </>
   );
 }

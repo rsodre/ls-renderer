@@ -1,4 +1,3 @@
-import { useAccount } from '@starknet-react/core'
 import React, { ReactNode, createContext, useReducer, useContext, useEffect, useMemo } from 'react'
 import { Network } from '../loot-survivor'
 
@@ -8,7 +7,7 @@ import { Network } from '../loot-survivor'
 
 export enum TokenSet {
   Collected = 'Collected',
-  All = 'Search',
+  Search = 'Search',
   Info = 'Info',
 }
 
@@ -16,7 +15,7 @@ export const initialState = {
   gridSize: 6,
   gridWidth: 3,
   gridHeight: 2,
-  tokenSet: TokenSet.Info,
+  tokenSet: TokenSet.Collected,
   pageIndex: 0,
   tokenId: 0,
   gridMode: true,

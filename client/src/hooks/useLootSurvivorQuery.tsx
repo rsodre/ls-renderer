@@ -1,15 +1,17 @@
 import { useMemo } from "react"
 import { BigNumberish } from "starknet";
 import { useStateContext } from "./StateContext";
-import useCustomQuery from "../loot-survivor/useCustomQuery";
 import { bigintToHex, isPositiveBigint } from "../utils/types";
+import useCustomQuery from "../loot-survivor/useCustomQuery";
 import {
   getAdventurersByOwnerCount,
   getAliveAdventurersCount,
   getAdventurersByOwner,
   getAdventurerById,
 } from "../loot-survivor/queries";
-import { Adventurer } from "../loot-survivor/types";
+import {
+  Adventurer,
+} from "../loot-survivor/types";
 
 export function useAdventurersByOwnerCount(owner: BigNumberish) {
   const { network } = useStateContext()
@@ -61,17 +63,18 @@ export function useAdventurersByOwner(owner: BigNumberish, pageIndex: number, sh
   }
 }
 
-export function useAdventurerById(tokenId: BigNumberish) {
+export function useAdventurerById(tokenId: number) {
   const { network } = useStateContext()
   const variables = useMemo(() => ({
-    owner: bigintToHex(tokenId).toLowerCase(),
+    id: tokenId,
   }), [tokenId]);
   const data = useCustomQuery(
     network,
     getAdventurerById,
     variables,
-    !isPositiveBigint(tokenId)
+    (tokenId > 0)
   );
+  // console.log(`ADVENTURER DATA:`, variables, data)
   return {
     adventurer: data?.adventurer as Adventurer ?? null,
   }
