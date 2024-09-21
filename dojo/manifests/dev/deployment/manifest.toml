@@ -1,0 +1,60 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+original_class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+abi = "manifests/dev/deployment/abis/dojo-world.json"
+address = "0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c"
+transaction_hash = "0x4e5f703f79ad8b1012eebf3c0c024bfc475b3b4b456f4783488a8cc91b5281c"
+block_number = 3
+seed = "skuller"
+manifest_name = "dojo-world"
+
+[world.metadata]
+profile_name = "dev"
+rpc_url = "http://localhost:5050/"
+
+[base]
+kind = "Class"
+class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+original_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/dev/deployment/abis/dojo-base.json"
+tag = "dojo-base"
+manifest_name = "dojo-base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x78a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337"
+class_hash = "0x4238753a778a55f7d1e9094a391aa37f59f7db18b8f04c6e8e50c63887b6de9"
+original_class_hash = "0x4238753a778a55f7d1e9094a391aa37f59f7db18b8f04c6e8e50c63887b6de9"
+base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/dev/deployment/abis/contracts/skuller-main-71f074f3.json"
+reads = []
+writes = ["skuller-Config"]
+init_calldata = ["0x1234"]
+tag = "skuller-main"
+systems = []
+manifest_name = "skuller-main-71f074f3"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+original_class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+abi = "manifests/dev/deployment/abis/models/skuller-Config-17591d85.json"
+tag = "skuller-Config"
+qualified_path = "skuller::models::models::config"
+manifest_name = "skuller-Config-17591d85"
+
+[[models.members]]
+name = "key"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "version"
+type = "Version"
+key = false
+
+[[models.members]]
+name = "loot_survivor_address"
+type = "ContractAddress"
+key = false

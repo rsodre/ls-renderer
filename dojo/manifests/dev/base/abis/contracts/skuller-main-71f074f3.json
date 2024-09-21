@@ -128,8 +128,31 @@
   },
   {
     "type": "impl",
+    "name": "IDojoInitImpl",
+    "interface_name": "skuller::systems::main::main::IDojoInit"
+  },
+  {
+    "type": "interface",
+    "name": "skuller::systems::main::main::IDojoInit",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_init",
+        "inputs": [
+          {
+            "name": "loot_survivor_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
     "name": "MainImpl",
-    "interface_name": "lsrender::systems::main::IMain"
+    "interface_name": "skuller::systems::main::IMain"
   },
   {
     "type": "struct",
@@ -401,7 +424,7 @@
   },
   {
     "type": "interface",
-    "name": "lsrender::systems::main::IMain",
+    "name": "skuller::systems::main::IMain",
     "items": [
       {
         "type": "function",
@@ -445,24 +468,38 @@
             "type": "core::byte_array::ByteArray"
           }
         ],
-        "state_mutability": "external"
-      }
-    ]
-  },
-  {
-    "type": "impl",
-    "name": "IDojoInitImpl",
-    "interface_name": "lsrender::systems::main::main::IDojoInit"
-  },
-  {
-    "type": "interface",
-    "name": "lsrender::systems::main::main::IDojoInit",
-    "items": [
+        "state_mutability": "view"
+      },
       {
         "type": "function",
-        "name": "dojo_init",
-        "inputs": [],
-        "outputs": [],
+        "name": "adventurer_token_uri",
+        "inputs": [
+          {
+            "name": "adventurer_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
+        "state_mutability": "view"
+      },
+      {
+        "type": "function",
+        "name": "simulate_token_uri",
+        "inputs": [
+          {
+            "name": "adventurer_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::byte_array::ByteArray"
+          }
+        ],
         "state_mutability": "view"
       }
     ]
@@ -516,7 +553,7 @@
   },
   {
     "type": "event",
-    "name": "lsrender::systems::main::main::Event",
+    "name": "skuller::systems::main::main::Event",
     "kind": "enum",
     "variants": [
       {
