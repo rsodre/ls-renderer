@@ -1,41 +1,43 @@
 import { useMemo } from "react";
 import { Grid, Icon, Image, SemanticWIDTHS } from "semantic-ui-react";
 import { BigNumberish } from "starknet";
-import { useTotalSupply } from "../hooks/useToken";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { goToTokenPage } from "../utils/karat";
+import { useStateContext } from "../hooks/StateContext";
+import { Adventurer } from "../loot-survivor/types";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
 export default function TokenGrid({
-  tokens,
-  gridSize,
-  firstTokenIndex,
+  adventurers,
+  skip,
 }: {
-  tokens: BigNumberish[]
-  gridSize: number
-  firstTokenIndex: number
+  adventurers: Adventurer[]
+  skip: number
 }) {
-  const columnsCount = useMemo(() => Math.floor(Math.sqrt(gridSize)) as SemanticWIDTHS, [gridSize])
-  const gridCount = useMemo(() => Math.min(gridSize, tokens.length - firstTokenIndex), [gridSize, tokens.length, firstTokenIndex])
+  const { gridSize, gridWidth, gridHeight } = useStateContext();
 
   let columns = useMemo(() => {
     let result = []
-    for (let i = 0; i < gridCount; i++) {
-      const tokenId = tokens[firstTokenIndex + i]
-      result.push(
-        <Col key={`${tokenId}`}>
-          <TokenImage tokenId={tokenId} />
-        </Col>
-      )
+    for (let i = 0; i < adventurers.length; i++) {
+      const adventurer = adventurers[i]
+      if (adventurer) {
+        const tokenId = adventurer.id ?? 0
+        const name = adventurer.name ?? '?'
+        result.push(
+          <Col key={`${tokenId}`} textAlign='center'>
+            <TokenImage tokenId={tokenId} name={name} />
+          </Col>
+        )
+      }
     }
     return result
-  }, [tokens, firstTokenIndex, gridSize])
+  }, [adventurers, skip, gridSize])
 
   return (
     <Grid>
-      <Row columns={columnsCount}>
+      <Row columns={gridWidth as SemanticWIDTHS}>
         {columns}
       </Row>
     </Grid>
@@ -44,8 +46,10 @@ export default function TokenGrid({
 
 function TokenImage({
   tokenId,
+  name,
 }: {
   tokenId: BigNumberish
+  name: string
 }) {
   const { image, isLoading } = useTokenUri(tokenId);
   const classNames = useMemo(() => {
@@ -67,9 +71,10 @@ function TokenImage({
           <Icon name='spinner' loading size='large' />
         </div>
       }
-      <div className="PlaceholderOverlayId">
+      {name}
+      {/* <div className="PlaceholderOverlayId">
         {`#${tokenId}`}
-      </div>
+      </div> */}
     </div>
   );
 }

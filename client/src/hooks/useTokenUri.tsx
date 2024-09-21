@@ -1,9 +1,11 @@
-import { BigNumberish } from "starknet";
-import { useDojo } from "../dojo/useDojo"
-import { useTokenContract } from "./useToken";
 import { useEffect, useMemo, useState } from "react";
+import { BigNumberish } from "starknet";
+import { useContract } from "@starknet-react/core";
 import { useMetadataContext, useTokenUriContext } from "./MetadataContext";
 import { decodeMetadata } from "../utils/decoder";
+import { useStateContext } from "./StateContext";
+import { networkConfig } from "../loot-survivor/networkConfig";
+import GameAbi from "../loot-survivor/abi/Game.json";
 
 type MetadataType = {
   name: string
@@ -17,13 +19,13 @@ type Attributes = {
 }
 
 export const useTokenUri = (token_id: BigNumberish) => {
-  const {
-    setup: {
-      systemCalls: { token_uri },
-    },
-  } = useDojo();
+  const { network } = useStateContext();
+  const contractAddress = useMemo(() => (networkConfig[network!].gameAddress), [network]);
 
-  const { contractAddress } = useTokenContract();
+  const { contract } = useContract({
+    abi: GameAbi,
+    address: contractAddress,
+  });
 
   const { dispatchSetUri } = useMetadataContext()
   const cached_uri = useTokenUriContext(token_id)
@@ -31,11 +33,11 @@ export const useTokenUri = (token_id: BigNumberish) => {
   const [uri, setUri] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const _fetch = () => {
-    if (contractAddress && token_id) {
+    if (contract && token_id) {
       // console.log(`>>>> fetching token uri for ${token_id}`)
       setUri('')
       setIsLoading(true)
-      token_uri(token_id).then((v) => {
+      contract.functions.token_uri(token_id).then((v) => {
         setUri(v ?? '')
         dispatchSetUri(token_id, v ?? '')
         setIsLoading(false)
@@ -54,7 +56,7 @@ export const useTokenUri = (token_id: BigNumberish) => {
     } else {
       _fetch();
     }
-  }, [contractAddress, token_id, cached_uri])
+  }, [contract, token_id, cached_uri])
 
   const metadata = useUriToMetadata(token_id, uri)
 

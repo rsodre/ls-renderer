@@ -3,12 +3,14 @@ import { Grid, Button } from "semantic-ui-react";
 import { MetadataProvider } from "../hooks/MetadataContext";
 import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
+import { useAdventurersByOwner, useAdventurersByOwnerCount } from "../hooks/useLootSurvivorQuery";
 import { TokenSet, useStateContext } from "../hooks/StateContext";
 import { goToTokenPage } from "../utils/karat";
 import Token from "./Token";
 import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
 import InfoPanel from "./InfoPanel";
+import { bigintEquals } from "../utils/types";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -18,10 +20,12 @@ export default function Main() {
   useTokenIdFromUrl()
 
   const { isConnected, address } = useAccount();
-  const { gridMode, tokenSet, allTokenIds, tokenIdsOfOwner, dispatchSetTokenSet } = useStateContext();
+  const { gridMode, tokenSet, dispatchSetTokenSet } = useStateContext();
 
-  const _changedTab = (tokenSet: TokenSet) => {
-    dispatchSetTokenSet(tokenSet)
+  const { adventurersByOwnerCount } = useAdventurersByOwnerCount(address ?? 0);
+
+  const _changedTab = (newTokenSet: TokenSet) => {
+    dispatchSetTokenSet(newTokenSet)
     goToTokenPage(0);
   }
 
@@ -30,13 +34,13 @@ export default function Main() {
       <Grid>
         <Row columns={'equal'}>
           {/* <Col>
-            <Button fluid secondary toggle active={tokenSet == TokenSet.All} onClick={() => _changedTab(TokenSet.All)}>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Search} onClick={() => _changedTab(TokenSet.Search)}>
               {`Collection (${allTokenIds.length})`}
             </Button>
           </Col> */}
           <Col>
             <Button fluid secondary toggle active={tokenSet == TokenSet.Collected} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Collected)}>
-              {`Collected (${tokenIdsOfOwner.length})`}
+              {`Collected (${adventurersByOwnerCount})`}
             </Button>
           </Col>
           <Col>
@@ -50,8 +54,8 @@ export default function Main() {
             {tokenSet == TokenSet.Info ?
               <InfoPanel />
               : <>
-                {gridMode && <MultiTokenTab />}
-                {!gridMode && <SingleTokenTab />}
+                {gridMode && <MultiTokenTab tokenCount={adventurersByOwnerCount} />}
+                {!gridMode && <SingleTokenTab tokenCount={adventurersByOwnerCount} />}
               </>
             }
           </Col>
@@ -62,40 +66,43 @@ export default function Main() {
 }
 
 function SingleTokenTab({
+  tokenCount,
 }: {
-  }) {
-  const { tokenId } = useStateContext();
-  const { tokenSetIds } = useStateContext();
+  tokenCount: number
+}) {
+  // const { tokenId } = useStateContext();
+  // const { adventurer } = adventurerByIdQuery(tokenId)
 
-  const tokenCount = useMemo(() => tokenSetIds.length, [tokenSetIds])
-  const pageIndex = useMemo(() => tokenSetIds.findIndex(token => tokenId == Number(token)), [tokenSetIds, tokenId])
-
-  const _changePage = (newPageIndex: number) => {
-    let tokenId = tokenSetIds[newPageIndex] ?? 1
-    goToTokenPage(Number(tokenId));
-  }
+  // const pageIndex = useMemo(() => adventurers.findIndex(adventurer => bigintEquals(adventurer.id, tokenId)), [tokenSetIds, tokenId])
+  // const _changePage = (newPageIndex: number) => {
+  //   let tokenId = tokenSetIds[newPageIndex] ?? 1
+  //   goToTokenPage(Number(tokenId));
+  // }
 
   return (
     <>
       <Token />
-      <Navigation
+      {/* <Navigation
         pageCount={tokenCount}
         pageIndex={pageIndex}
         onPageChange={_changePage}
-      />
+      /> */}
     </>
   );
 }
 
 
 function MultiTokenTab({
+  tokenCount,
 }: {
-  }) {
-  const { gridSize } = useStateContext();
-  const { tokenSetIds, pageIndex, dispatchSetPageIndex } = useStateContext();
+  tokenCount: number
+}) {
+  const { isConnected, address } = useAccount();
+  const { gridSize, pageIndex, dispatchSetPageIndex } = useStateContext();
+  const { adventurers } = useAdventurersByOwner(address ?? 0, pageIndex, true)
 
-  const pageCount = useMemo(() => Math.ceil(tokenSetIds.length / gridSize), [tokenSetIds, gridSize])
-  const firstTokenIndex = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])
+  const pageCount = useMemo(() => Math.ceil(tokenCount / gridSize), [tokenCount, gridSize])
+  const skip = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])
 
   const _changePage = (newPageIndex: number) => {
     dispatchSetPageIndex(newPageIndex);
@@ -104,9 +111,8 @@ function MultiTokenTab({
   return (
     <>
       <TokenGrid
-        tokens={tokenSetIds}
-        gridSize={gridSize}
-        firstTokenIndex={firstTokenIndex}
+        adventurers={adventurers}
+        skip={skip}
       />
       <Navigation
         pageCount={pageCount}

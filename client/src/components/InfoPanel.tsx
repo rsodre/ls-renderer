@@ -1,16 +1,9 @@
-import { useMemo } from "react";
-import { Divider, Grid, Icon, Image } from "semantic-ui-react";
-import { useTokenOwner } from "../hooks/useToken";
-import { useTokenUri } from "../hooks/useTokenUri";
-import { AddressShort } from "./ui/AddressShort";
-import { useStateContext } from "../hooks/StateContext";
+import { Divider, Grid } from "semantic-ui-react";
 
 const Row = Grid.Row
 const Col = Grid.Column
 
 export default function InfoPanel() {
-
-
   return (
     <>
       <Divider />

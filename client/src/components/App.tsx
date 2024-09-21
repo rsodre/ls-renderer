@@ -3,7 +3,6 @@ import { StateProvider } from "../hooks/StateContext";
 import { useAccount } from "@starknet-react/core";
 import { useDebug } from "../hooks/useDebug";
 import { ConnectedHeader, ConnectButton } from "./Connect";
-import MintButton from "./MintButton";
 import DojoSetup from "../dojo/DojoSetup";
 import Main from "./Main";
 
@@ -24,16 +23,17 @@ export default function App() {
 
             <Row columns={'equal'}>
               <Col>
-                <ConnectedHeader />
+                <Divider />
               </Col>
             </Row>
-            <Row>
-              <Col textAlign="left" width={10}>
+
+            <Row columns={'equal'}>
+              <Col textAlign="left" verticalAlign="bottom">
                 <h1>LS RENDERER</h1>
               </Col>
-              <Col textAlign="right" width={6}>
+              <Col textAlign="right" verticalAlign="top">
+                <ConnectedHeader />
                 {!isConnected && <ConnectButton />}
-                {isConnected && <MintButton />}
               </Col>
             </Row>
 

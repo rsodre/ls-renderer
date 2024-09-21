@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { Grid, Icon, Image } from "semantic-ui-react";
-import { useTokenOwner } from "../hooks/useToken";
 import { useTokenUri } from "../hooks/useTokenUri";
 import { AddressShort } from "./ui/AddressShort";
 import { useStateContext } from "../hooks/StateContext";
+import { useAdventurerById } from "../hooks/useLootSurvivorQuery";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -11,7 +11,7 @@ const Col = Grid.Column
 export default function Token() {
   const { tokenId } = useStateContext()
   const { name, image, attributes, isLoading } = useTokenUri(tokenId);
-  const { ownerAddress } = useTokenOwner(tokenId);
+  const { adventurer } = useAdventurerById(tokenId)
 
   const fakeAttributes = useMemo(() => ({
     'Class': '...',
@@ -55,7 +55,7 @@ export default function Token() {
           Owner
         </Col>
         <Col textAlign="right">
-          {isLoading ? '...' : <AddressShort address={ownerAddress ?? 0} />}
+          {isLoading ? '...' : <AddressShort address={adventurer?.owner ?? 0} />}
         </Col>
       </Row>
 

@@ -3,13 +3,15 @@ $font-family-mono: 'Courier New', monospace;
 
 // Figma colors
 // https://www.figma.com/file/eseZA1jRIoX6IYNtoHgz30/Pistols-at-Ten-Blocks
-$color-bg: rgba(21, 21, 21, 1); // LS terminal-black
-$color-darkest: #000;
-$color-dark: #475569; // ls dead-gray
+// $color-bg: rgba(21, 21, 21, 1); // LS terminal-black
+// $color-dark: #475569; // ls dead-gray
+$color-bg: rgba(0, 21, 0, 1);
+$color-darkest: rgba(74, 246, 38, 0.04); // LS terminal-green
+$color-dark: rgba(74, 246, 38, 0.1); // LS terminal-green
 $color-medium: #ccc;
 // $color-bright: rgba(74, 246, 38, 1);  // LS terminal-green
-$color-bright: rgba(255, 176, 0, 1);  // LS terminal-green
-$color-brightest:  rgba(255, 200, 0, 1);    // LS terminal-yellow
+$color-bright: rgba(255, 176, 0, 0.8);  // LS terminal-green
+$color-brightest:  rgba(255, 176, 0, 1);    // LS terminal-yellow
 
 
 $color-white: $color-brightest;
@@ -583,15 +585,15 @@ $logo-url: '/logos/logo_avante.svg';
 // semantic-ui
 //
 ._round_border {
-  border: $border-button!important;
+  // outline: $border-button!important;
   border-radius: 0.1em!important;
 }
 ._round_border_active {
-  border: $border-button-active!important;
+  outline: $border-button-active!important;
   border-radius: 0.1em!important;
 }
 ._round_border_inactive {
-  border: $border-button-inactive!important;
+  // outline: $border-button-inactive!important;
   border-radius: 0.1em!important;
 }
 //
@@ -701,13 +703,14 @@ input::placeholder {
 ._button {
   @extend ._button_shape, ._round_border, .TitleCase;
   font-family: $font-family;
-  background-color: rgba($color-dark, 0.6);
+  background-color: rgba($color-dark, 0.2);
   color: $color-text;
 }
 ._button_hover {
   background-color: $color-bright;
   color: $color-dark;
   text-shadow: $text-shadow;
+  outline: $border-button!important;
 }
 ._button_focus {
   @extend ._round_border_active;
@@ -733,14 +736,17 @@ input::placeholder {
 .ui.button.toggle.active,
 .ui.buttons .button.toggle.active,
 .ui.toggle.buttons .active.button {
-  background-color: $color-dark!important;
+  background-color: $color-important!important;
 }
 .ui.button.toggle.active:hover {
   background-color: $color-dark!important; // default is green
 }
-.ui.secondary.button:not(.ui.button.toggle.active) {
-  border: 0!important;
+.ui.secondary.button {
+  background-color: $color-darkest!important;
 }
+// .ui.secondary.button:not(.ui.button.toggle.active) {
+//   outline: 0!important;
+// }
 //
 // <Menu> buttons
 .ui.menu {

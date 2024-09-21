@@ -43,17 +43,13 @@ export function ConnectedHeader() {
   const { address, chainId, isConnected } = useAccount();
   if (!isConnected) return <></>
   return (
-    <Grid>
-      <Row columns={'equal'}>
-        <Col textAlign="left" verticalAlign="middle">
+    <div>
           <AddressShort address={address ?? 0} />
-        </Col>
-        <Col textAlign="right" verticalAlign="middle">
+        <div>
           {chainId ? feltToString(chainId) : '[chain]'}
           {' '}
           <DisconnectIcon />
-        </Col>
-      </Row>
-    </Grid>
+        </div>
+    </div>
   )
 }

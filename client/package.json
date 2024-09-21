@@ -12,6 +12,7 @@
     "create-components": "npx @dojoengine/core ./src/dojo/generated/dev/manifest.json ./src/dojo/generated/contractComponents.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@cartridge/connector": "0.3.44",
     "@cartridge/controller": "0.3.44",
     "@dojoengine/core": "v1.0.0-alpha.12",
