@@ -29,7 +29,7 @@ export default function App() {
 
             <Row columns={'equal'}>
               <Col textAlign="left" verticalAlign="bottom">
-                <h1>LS RENDERER</h1>
+                <h1>💀 SKULLER</h1>
               </Col>
               <Col textAlign="right" verticalAlign="top">
                 <ConnectedHeader />
@@ -59,7 +59,7 @@ export default function App() {
               <Col>
                 custom renderer for <a href='https://lootsurvivor.io'>Loot Survivor</a>
                 <br />
-                <a href='https://x.com/matalecode'>@matalecode</a> / <a href='https://github.com/rsodre/ls-renderrer'>github</a>
+                <a href='https://x.com/matalecode'>@matalecode</a> / <a href='https://github.com/rsodre/skuller'>github</a>
               </Col>
             </Row>
 

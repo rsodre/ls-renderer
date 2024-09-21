@@ -1,10 +1,10 @@
 
-# Loot Survivor Adventurer Renderer
+# SKULLER 💀 A Loot Survivor Adventurer Renderer
 
-**Loot Survivor** is a fully onchain arcade dungeon crawler built on Starknet in conjunction with [Realms.world](https://realms.world)
+**Loot Survivor** is a fully on-chain arcade dungeon crawler built on Starknet in conjunction with [Realms.world](https://realms.world)
 and [BibliothecaDAO](https://www.bibliothecadao.xyz/).
 
-This project is a custom renderer for the **Adventurer** tokens, based on the original LS 1.5
+**Skuller** is a custom renderer for the **Adventurer** tokens, based on the original LS 1.5
 [renderer](https://github.com/Provable-Games/loot-survivor/blob/main/contracts/game/src/game/renderer.cairo)
 and wrapped with [Dojo](https://www.dojoengine.org/) for easy deployment and upgradability.
 

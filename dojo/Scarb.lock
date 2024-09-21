@@ -53,16 +53,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lsrender"
-version = "0.1.0"
-dependencies = [
- "adventurer",
- "dojo",
- "graffiti",
- "loot",
-]
-
-[[package]]
 name = "market"
 version = "0.1.0"
 source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
@@ -77,4 +67,14 @@ version = "0.1.0"
 source = "git+https://github.com/Provable-Games/loot-survivor?rev=598ab8b7184bac6c7d486e884e879606909d4e33#598ab8b7184bac6c7d486e884e879606909d4e33"
 dependencies = [
  "combat",
+]
+
+[[package]]
+name = "skuller"
+version = "0.1.0"
+dependencies = [
+ "adventurer",
+ "dojo",
+ "graffiti",
+ "loot",
 ]

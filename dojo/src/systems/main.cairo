@@ -21,8 +21,8 @@ mod main {
     use super::{IMain, WORLD};
     use starknet::{ContractAddress, get_caller_address};
     use adventurer::{adventurer::{Adventurer}, adventurer_meta::{AdventurerMetadata}, bag::{Bag}};
-    use lsrender::models::models::{Config};
-    use lsrender::renderers::v0;
+    use skuller::models::models::{Config};
+    use skuller::renderers::v0;
 
     #[abi(embed_v0)]
     impl MainImpl of IMain<ContractState> {

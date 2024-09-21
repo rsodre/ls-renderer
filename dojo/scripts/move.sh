@@ -7,4 +7,4 @@ export RPC_URL="http://localhost:5050";
 export WORLD_ADDRESS=$(cat ./manifests/dev/manifest.json | jq -r '.world.address')
 
 # sozo execute --world <WORLD_ADDRESS> <CONTRACT> <ENTRYPOINT>
-sozo execute --world $WORLD_ADDRESS lsrender::systems::main::main move -c 1 --wait
+sozo execute --world $WORLD_ADDRESS skuller::systems::main::main move -c 1 --wait

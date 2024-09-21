@@ -1,4 +1,4 @@
-tag = "lsrender-main"
+tag = "skuller-main"
 writes = [
-  "lsrender-Config",
+  "skuller-Config",
 ]

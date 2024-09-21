@@ -11,13 +11,12 @@ export default function InfoPanel() {
         <Row columns={'equal'}>
           <Col>
             <p>
-              This is a custom renderer for <a href='https://dojoengine.org'>Loot Survivor</a>
-              <br />made with <a href='https://dojoengine.org'>Dojo</a>, a game engine for Starknet.
+              <b>SKULLER</b> a custom renderer for <a href='https://dojoengine.org'>Loot Survivor</a>
+              <br />wrapped with <a href='https://dojoengine.org'>Dojo</a>, a fully on-chaingame engine.
               </p>
             <p>
-              
-              It's <a href='https://github.com/rsodre/ls-renderrer'>open-source</a>, like Loot Survivor.
-              <br />Go there for more info.
+              It's <b>open source</b>, like Loot Survivor
+              <br />Go to <a href='https://github.com/rsodre/skuller'>github</a> for more info.
             </p>
           </Col>
         </Row>

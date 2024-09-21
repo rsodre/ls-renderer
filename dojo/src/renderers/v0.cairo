@@ -8,7 +8,7 @@ use adventurer::{
     bag::Bag, item::{Item, ImplItem},
 };
 use loot::{loot::ImplLoot, constants::{ImplItemNaming, ItemSuffix}};
-use lsrender::utils::encoding::{bytes_base64_encode, U256BytesUsedTraitImpl};
+use skuller::utils::encoding::{bytes_base64_encode, U256BytesUsedTraitImpl};
 use graffiti::json::JsonImpl;
 
 // @notice Generates the LS logo svg
