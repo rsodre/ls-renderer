@@ -258,4 +258,127 @@ All contracts are deployed at: 0x2025d338c78c723bcf3361885b29cab5d3861d5df873223
 \
 \
 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+=======================================================================\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\b\fs36 \cf0 UPGRADE 2: fixed colors
+\f1\b0\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf0 \
+
+\f0\b $ date\
+Sun Sep 22 13:43:01 EDT 2024\
+\
+$ ./migrate mainnet\
+
+\f1\b0 ------------------------------------------------------------------------------\
+PROFILE: mainnet\
+PROJECT: Skuller\
+RPC_URL: https://api.cartridge.gg/x/starknet/mainnet\
+MANIFEST_FILE_PATH: ./manifests/mainnet/deployment/manifest.json\
+WORLD_ADDRESS: 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c\
+RENDERER_ADDRESS: 0x78a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337\
+------------------------------------------------------------------------------\
+MANIFEST_FILE_PATH: ./manifests/mainnet/deployment/manifest.json\
+BINDINGS_PATH: ./bindings/typescript\
+CLIENT_PATH: ../client/src/dojo/generated\
+CLIENT_PROFILE_PATH: ../client/src/dojo/generated/mainnet\
+------------------------------------------------------------------------------\
+Cleaning...\
+Building...\
+compiling skuller v0.1.0\
+------------------------------------------------------------------------------\
+>>> Migrate plan...\
+>>> Migrate apply...\
+\
+Migration account: 0x15af5935c1cbd913b069973ab162c364a03eb6e3ea311d50a06a8c2ba060ac8\
+\
+World name: skuller\
+\
+Chain ID: SN_MAIN\
+\
+[1] 
+\f2 \uc0\u55356 \u57102 
+\f1  Building World state....\
+  > Found remote World: 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c\
+[2] 
+\f2 \uc0\u55358 \u56816 
+\f1  Evaluating Worlds diff....\
+  > Total diffs found: 2\
+[3] 
+\f2 \uc0\u55357 \u56550 
+\f1  Preparing for migration....\
+  > Total items to be migrated (2): New 2 Update 0\
+  > Declarers: 1\
+[4] 
+\f2 \uc0\u55357 \u57056 
+\f1  Migrating....\
+ \
+# Models (1)\
+skuller-Config\
+  > Already registered\
+# Contracts (1)\
+skuller-main\
+  > Selector: 0x071f074f387ba9b78e5d04e86aae488e25077383bb5f249626673eaf08205acd\
+  > Class hash: 0x04238753a778a55f7d1e9094a391aa37f59f7db18b8f04c6e8e50c63887b6de9\
+  > Declare transaction: 0x06e9892d6ec297787e7ec863011d1c31a7dd78309ee734ea18a5ef5db18ea2bf\
+skuller-main\
+  > skuller-main upgraded at 0x078a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337\
+All contracts are deployed at: 0x155f4fb114f2a0b4b123402d3d5b72cf1a78bde8f9fb1ade2517f260079fa0e\
+\
+\
+
+\f2 \uc0\u55356 \u57225 
+\f1  Successfully migrated World at address 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c\
+\
+[5] 
+\f2 \uc0\u10024 
+\f1  Updating manifests....\
+\
+
+\f2 \uc0\u10024 
+\f1  Done.\
+ \
+[6] 
+\f2 \uc0\u55357 \u56715 \u65039 
+\f1  Authorizing systems based on overlay....\
+  > Granting write access to skuller-main for resources: [Model("skuller-Config")]\
+ \
+  > Transaction hash: 0x027ba7b2a6293346662fc0230c354e8ba94c58ececcbbd9d3a5685dc5ac56699\
+  > Auto authorize completed successfully\
+ \
+[7] 
+\f2 \uc0\u55356 \u57303 \u65039 
+\f1  Initializing contracts....\
+  > Contract skuller-main was upgraded, skipping initialization\
+  > No contracts to initialize\
+ \
+[8] 
+\f2 \uc0\u55356 \u57104 
+\f1  Uploading metadata....\
+ \
+  > skuller-main: ipfs://QmbohEpgxUHHu74JkWdYJbMLmsdB4KZXhekXUUnkRn1fWd\
+> All IPFS artifacts have been successfully uploaded.\
+> All metadata have been registered in the resource registry (tx hash: 0x374f60e8bdac310235d273b8e9ce48b4a37b61519f6d6b38280d04c7cfd1fa2)\
+\
+
+\f2 \uc0\u10024 
+\f1  Done.\
+
+\f2 \uc0\u55357 \u56397 
+\f1 \
+------------------------------------------------------------------------------\
+>>> Copying manifest [./manifests/mainnet/deployment/manifest.json] to [../client/src/dojo/generated/mainnet/]\
+-rw-r--r--@ 1 roger  staff   624 Sep 22 13:41 ../client/src/dojo/generated/contractComponents.ts\
+-rw-r--r--@ 1 roger  staff  1946 Sep 21 11:53 ../client/src/dojo/generated/setup.ts\
+-rw-r--r--@ 1 roger  staff  1676 Sep 21 19:10 ../client/src/dojo/generated/setupWorld.ts\
+-rw-r--r--@ 1 roger  staff   134 Sep 21 11:53 ../client/src/dojo/generated/world.ts\
+--- DONE! 
+\f2 \uc0\u55357 \u56397 
+\f1 \
+\
+\
 }
