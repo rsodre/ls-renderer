@@ -7,6 +7,7 @@ import { useAdventurerById } from "../hooks/useLootSurvivorQuery";
 import { BigNumberish } from "starknet";
 import { useSkulllerAdventurerTokenUri, useSkulllerSimulateTokenUri } from "../hooks/useSkuller";
 import { useCurrentRendererContract, useOwnerOf } from "../hooks/useLootSurvivorContract";
+import { goToTokenPage, useRealmsWorldUrl } from "../utils/navigation";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -58,7 +59,7 @@ function TokenWithMetadata({
   isLoading: boolean
 }) {
   const { owner } = useOwnerOf(tokenId)
-  const { rendererContract } = useCurrentRendererContract(tokenId)
+  const { realmsWorldUrl } = useRealmsWorldUrl(tokenId)
   
   let attributesRows = useMemo(() => Object.keys(attributes ?? {}).map(key => (
     <Row key={key} columns={'equal'} className="AttributeRow">
@@ -97,6 +98,7 @@ function TokenWithMetadata({
       <Row columns={'equal'} className="AttributeRow">
         <Col textAlign="center">
           <h4 className='White'>{name}</h4>
+          <a href={realmsWorldUrl}>Realms.world</a>
         </Col>
       </Row>
 
