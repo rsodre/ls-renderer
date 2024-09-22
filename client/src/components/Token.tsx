@@ -14,8 +14,15 @@ const Col = Grid.Column
 
 export function TokenSkuller() {
   const { tokenId } = useStateContext()
-  const { name, image, attributes, isLoading } = useSkulllerAdventurerTokenUri(tokenId);
+
+  // to test on localhost...
+  // - deploy to local katana, torri not required
+  // - edit .env: VITE_PUBLIC_CHAIN_ID=KATANA_LOCAL
+  // - uncomment useSkulllerSimulateTokenUri()
+  // - comment useSkulllerAdventurerTokenUri()
   // const { name, image, attributes, isLoading } = useSkulllerSimulateTokenUri(tokenId);
+  const { name, image, attributes, isLoading } = useSkulllerAdventurerTokenUri(tokenId);
+
   return <TokenWithMetadata
     tokenId={tokenId}
     name={name}
