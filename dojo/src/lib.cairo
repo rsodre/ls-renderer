@@ -3,6 +3,7 @@ mod systems {
 }
 mod renderers {
     mod v0;
+    mod v1;
 }
 mod models {
     mod models;

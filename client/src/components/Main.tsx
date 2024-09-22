@@ -77,7 +77,7 @@ function SingleTokenTab({
         <Row columns={'equal'}>
           <Col>
             <Button fluid secondary toggle active={!simulated} onClick={() => setSimulated(false)}>
-              {`on-chain`}
+              {`Current`}
             </Button>
           </Col>
           <Col>

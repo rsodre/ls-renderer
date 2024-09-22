@@ -42,7 +42,7 @@ mod main {
     use super::{IMain, WORLD};
     use starknet::{ContractAddress, get_caller_address};
     use skuller::models::models::{Config};
-    use skuller::renderers::v0;
+    use skuller::renderers::{v0, v1};
 
     use adventurer::{
         adventurer::{Adventurer, ImplAdventurer},
@@ -92,7 +92,7 @@ mod main {
         ) -> ByteArray {
             WORLD(world);
             let adventurer = Adventurer {
-                health: 1023,
+                health: 600,
                 xp: 10000,
                 stats: Stats {
                     strength: 2,
@@ -103,7 +103,7 @@ mod main {
                     charisma: 20,
                     luck: 100
                 },
-                gold: 1023,
+                gold: 333,
                 equipment: Equipment {
                     weapon: Item { id: 42, xp: 400 },
                     chest: Item { id: 49, xp: 400 },
@@ -144,7 +144,7 @@ mod main {
             self._token_uri(
                 adventurer_id.try_into().unwrap(),
                 adventurer,
-                adventurer_name: 'Indiana jones',
+                adventurer_name: 'Blobert #1234',
                 adventurerMetadata: adventurer_metadata,
                 bag: bag,
                 item_specials_seed: 492,
@@ -167,7 +167,7 @@ mod main {
             rank_at_death: u8,
             current_rank: u8,
         ) -> ByteArray {
-            v0::create_metadata(
+            v1::create_metadata(
                 adventurer_id.try_into().unwrap(),
                 adventurer,
                 adventurer_name,
