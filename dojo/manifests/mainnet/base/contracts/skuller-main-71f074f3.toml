@@ -1,0 +1,11 @@
+kind = "DojoContract"
+class_hash = "0x41d8e144ddd4da416febdec4607d1c2e29f1c1ca9cb40f25055040cf631df0d"
+original_class_hash = "0x41d8e144ddd4da416febdec4607d1c2e29f1c1ca9cb40f25055040cf631df0d"
+base_class_hash = "0x0"
+abi = "manifests/mainnet/base/abis/contracts/skuller-main-71f074f3.json"
+reads = []
+writes = []
+init_calldata = []
+tag = "skuller-main"
+systems = []
+manifest_name = "skuller-main-71f074f3"

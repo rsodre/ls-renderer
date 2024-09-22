@@ -1,0 +1,59 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+original_class_hash = "0x6f4515274ee23404789c3351a77107d0ec07508530119822046600ca6948d6e"
+abi = "manifests/mainnet/deployment/abis/dojo-world.json"
+address = "0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c"
+transaction_hash = "0x462a2ea11988d93bab2c2e02aee20439536ea6f75aa09cd983a4cc388e39f58"
+seed = "skuller"
+manifest_name = "dojo-world"
+
+[world.metadata]
+profile_name = "mainnet"
+rpc_url = "https://api.cartridge.gg/x/starknet/mainnet"
+
+[base]
+kind = "Class"
+class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+original_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/mainnet/deployment/abis/dojo-base.json"
+tag = "dojo-base"
+manifest_name = "dojo-base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x78a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337"
+class_hash = "0x41d8e144ddd4da416febdec4607d1c2e29f1c1ca9cb40f25055040cf631df0d"
+original_class_hash = "0x41d8e144ddd4da416febdec4607d1c2e29f1c1ca9cb40f25055040cf631df0d"
+base_class_hash = "0x2427dd10a58850ac9a5ca6ce04b7771b05330fd18f2e481831ad903b969e6b2"
+abi = "manifests/mainnet/deployment/abis/contracts/skuller-main-71f074f3.json"
+reads = []
+writes = ["skuller-Config"]
+init_calldata = ["0x018108b32cea514a78ef1b0e4a0753e855cdf620bc0565202c02456f618c4dc4"]
+tag = "skuller-main"
+systems = []
+manifest_name = "skuller-main-71f074f3"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+original_class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+abi = "manifests/mainnet/deployment/abis/models/skuller-Config-17591d85.json"
+tag = "skuller-Config"
+qualified_path = "skuller::models::models::config"
+manifest_name = "skuller-Config-17591d85"
+
+[[models.members]]
+name = "key"
+type = "u8"
+key = true
+
+[[models.members]]
+name = "version"
+type = "Version"
+key = false
+
+[[models.members]]
+name = "loot_survivor_address"
+type = "ContractAddress"
+key = false

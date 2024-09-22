@@ -1,0 +1,22 @@
+kind = "DojoModel"
+class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+original_class_hash = "0x1a27565e59392d60ecc614359efb888c5212e0cb87d7a802fca543a03cad07d"
+abi = "manifests/mainnet/base/abis/models/skuller-Config-17591d85.json"
+tag = "skuller-Config"
+qualified_path = "skuller::models::models::config"
+manifest_name = "skuller-Config-17591d85"
+
+[[members]]
+name = "key"
+type = "u8"
+key = true
+
+[[members]]
+name = "version"
+type = "Version"
+key = false
+
+[[members]]
+name = "loot_survivor_address"
+type = "ContractAddress"
+key = false

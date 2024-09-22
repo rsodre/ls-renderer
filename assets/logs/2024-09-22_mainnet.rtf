@@ -1,0 +1,149 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 CourierNewPS-BoldMT;\f1\fmodern\fcharset0 CourierNewPSMT;\f2\fnil\fcharset0 AppleColorEmoji;
+}
+{\colortbl;\red255\green255\blue255;\red255\green232\blue203;\red255\green255\blue10;\red255\green255\blue10;
+}
+{\*\expandedcolortbl;;\csgenericrgb\c100000\c90980\c79608;\cssrgb\c99942\c98555\c0;\cssrgb\c99942\c98555\c0;
+}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17820\viewh17760\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 \cb2 $ ./migrate mainnet\
+
+\f1\b0 ------------------------------------------------------------------------------\
+PROFILE: mainnet\
+PROJECT: Skuller\
+RPC_URL: https://api.cartridge.gg/x/starknet/mainnet\
+MANIFEST_FILE_PATH: ./manifests/mainnet/deployment/manifest.json\
+WORLD_ADDRESS: 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c\
+RENDERER_ADDRESS: null\
+------------------------------------------------------------------------------\
+MANIFEST_FILE_PATH: ./manifests/mainnet/deployment/manifest.json\
+BINDINGS_PATH: ./bindings/typescript\
+CLIENT_PATH: ../client/src/dojo/generated\
+CLIENT_PROFILE_PATH: ../client/src/dojo/generated/mainnet\
+------------------------------------------------------------------------------\
+Cleaning...\
+Building...\
+compiling skuller v0.1.0\
+------------------------------------------------------------------------------\
+>>> Migrate plan...\
+>>> Migrate apply...\
+\
+Migration account: 0x15af5935c1cbd913b069973ab162c364a03eb6e3ea311d50a06a8c2ba060ac8\
+\
+World name: skuller\
+\
+Chain ID: SN_MAIN\
+\
+[1] 
+\f2 \uc0\u55356 \u57102 
+\f1  Building World state....\
+  > Found remote World: 
+\f0\b \cb3 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c
+\f1\b0 \cb2 \
+[2] 
+\f2 \uc0\u55358 \u56816 
+\f1  Evaluating Worlds diff....\
+  > Total diffs found: 2\
+[3] 
+\f2 \uc0\u55357 \u56550 
+\f1  Preparing for migration....\
+  > Total items to be migrated (2): New 2 Update 0\
+  > Declarers: 1\
+[4] 
+\f2 \uc0\u55357 \u57056 
+\f1  Migrating....\
+ \
+# Models (1)\
+skuller-Config\
+  > Already registered\
+# Contracts (1)\
+skuller-main\
+  > Selector: 0x071f074f387ba9b78e5d04e86aae488e25077383bb5f249626673eaf08205acd\
+  > Class hash: 0x041d8e144ddd4da416febdec4607d1c2e29f1c1ca9cb40f25055040cf631df0d\
+  > Declare transaction: 0x05260eaa0589d07ac6bfe9c8b2c7703bc6f9b85ee5465ccfb7776513bdf7f070\
+skuller-main\
+  > skuller-main deployed at 
+\f0\b \cb4 0x78a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337
+\f1\b0 \cb2 \
+All contracts are deployed at: 0x16f62a11f600e9425fd60d3d1d5e66b6abafcd4a5b9e80c068e6bc91b38cce2\
+\
+\
+
+\f2 \uc0\u55356 \u57225 
+\f1  Successfully migrated World at address 0x4f02c15f31f7c74673b33680e80e4118f38d9712255ed138e47e290e025a13c\
+\
+[5] 
+\f2 \uc0\u10024 
+\f1  Updating manifests....\
+\
+
+\f2 \uc0\u10024 
+\f1  Done.\
+ \
+[6] 
+\f2 \uc0\u55357 \u56715 \u65039 
+\f1  Authorizing systems based on overlay....\
+  > Granting write access to skuller-main for resources: [Model("skuller-Config")]\
+ \
+  > Transaction hash: 0x07ceeb1a4aa88c4883a9f3a963f5df9affa824503bbe97d4bc232ace66d0048e\
+  > Auto authorize completed successfully\
+ \
+[7] 
+\f2 \uc0\u55356 \u57303 \u65039 
+\f1  Initializing contracts....\
+  > Initializing contract: skuller-main ([0x71f074f387ba9b78e5d04e86aae488e25077383bb5f249626673eaf08205acd, 0x1, 0x18108b32cea514a78ef1b0e4a0753e855cdf620bc0565202c02456f618c4dc4])\
+  > All contracts are initialized at: 0x46e578246a4a0c5f3ee41670007c543b4f85c6536a358d091fcfdadbb948cbe\
+\
+ \
+[8] 
+\f2 \uc0\u55356 \u57104 
+\f1  Uploading metadata....\
+ \
+  > skuller-main: ipfs://QmWxTRLjbJsLU8JPDveaWLi2TWPspTZXdUA6mhh1nnuG2k\
+> All IPFS artifacts have been successfully uploaded.\
+> All metadata have been registered in the resource registry (tx hash: 0x1f3b986fae54941c9877695b32911845dc6fac8625624f2f2a0ae116d0bc908)\
+\
+
+\f2 \uc0\u10024 
+\f1  Done.\
+
+\f2 \uc0\u55357 \u56397 
+\f1 \
+------------------------------------------------------------------------------\
+>>> Copying manifest [./manifests/mainnet/deployment/manifest.json] to [../client/src/dojo/generated/mainnet/]\
+-rw-r--r--@ 1 roger  staff   624 Sep 22 11:57 ../client/src/dojo/generated/contractComponents.ts\
+-rw-r--r--@ 1 roger  staff  1946 Sep 21 11:53 ../client/src/dojo/generated/setup.ts\
+-rw-r--r--@ 1 roger  staff  1676 Sep 21 19:10 ../client/src/dojo/generated/setupWorld.ts\
+-rw-r--r--@ 1 roger  staff   134 Sep 21 11:53 ../client/src/dojo/generated/world.ts\
+--- DONE! 
+\f2 \uc0\u55357 \u56397 
+\f1 \
+\
+\
+\
+\
+\
+\
+
+\f0\b\fs36 RENDERER CONTRACT
+\f1\b0\fs24 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\b \cf0 \cb4 0x78a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337
+\f1\b0 \cb2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://voyager.online/contract/0x078a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337"}}{\fldrslt \cf0 https://voyager.online/contract/0x078a5b235bf74353bb0595b8c984a53ce97bf6218843cf637f6dcaf151c6b337}}\
+\
+\
+\
+\
+=======================================================================\
+\
+\
+\
+\
+\
+\
+}
