@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Grid, Button, Divider } from "semantic-ui-react";
+import { Grid, Button, Divider, Input } from "semantic-ui-react";
 import { MetadataProvider } from "../hooks/MetadataContext";
 import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
@@ -51,14 +51,19 @@ export default function Main() {
             </Button>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <Divider />
+          </Col>
+        </Row>
         <Row columns={'equal'}>
           <Col>
-            {tokenSet == TokenSet.Info ?
-              <InfoPanel />
-              : <>
-                {gridMode && <MultiTokenTab tokenCount={adventurersByOwnerCount} />}
-                {!gridMode && <SingleTokenTab tokenCount={adventurersByOwnerCount} />}
-              </>
+            {tokenSet == TokenSet.Info ? <InfoPanel />
+              : tokenSet == TokenSet.Search ? <SearchTab />
+                : <>
+                  {gridMode && <MultiTokenTab tokenCount={adventurersByOwnerCount} />}
+                  {!gridMode && <SingleTokenTab />}
+                </>
             }
           </Col>
         </Row>
@@ -67,11 +72,55 @@ export default function Main() {
   );
 }
 
-function SingleTokenTab({
+//-------------------
+// GRID
+//
+function MultiTokenTab({
   tokenCount,
 }: {
   tokenCount: number
 }) {
+  const { isConnected, address } = useAccount();
+  const { gridSize, pageIndex, dispatchSetPageIndex } = useStateContext();
+  const { adventurers } = useAdventurersByOwner(address ?? 0, pageIndex, true)
+
+  const pageCount = useMemo(() => Math.ceil(tokenCount / gridSize), [tokenCount, gridSize])
+  const skip = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])
+
+  const _changePage = (newPageIndex: number) => {
+    dispatchSetPageIndex(newPageIndex);
+  }
+
+  if (!isConnected) {
+    return (
+      <>
+        <p>connect your wallet to<br />manage your collection</p>
+        <ConnectButton />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <TokenGrid
+        adventurers={adventurers}
+        skip={skip}
+      />
+      <Navigation
+        pageCount={pageCount}
+        pageIndex={pageIndex}
+        onPageChange={_changePage}
+        prefix='Page'
+      />
+    </>
+  );
+}
+
+
+//-------------------
+// TOKEN
+//
+function SingleTokenTab() {
   const { tokenId } = useStateContext()
   const { youOwn } = useOwnerOf(tokenId)
   const { rendererContract, isSkuller } = useCurrentRendererContract(tokenId)
@@ -112,45 +161,39 @@ function SingleTokenTab({
 }
 
 
-function MultiTokenTab({
-  tokenCount,
-}: {
-  tokenCount: number
-}) {
-  const { isConnected, address } = useAccount();
-  const { gridSize, pageIndex, dispatchSetPageIndex } = useStateContext();
-  const { adventurers } = useAdventurersByOwner(address ?? 0, pageIndex, true)
+//-------------------
+// SEARCH
+//
+function SearchTab() {
+  const [searchId, setSearchId] = useState(1)
+  const canSearch = useMemo(() => (!isNaN(searchId) && searchId > 0), [searchId])
 
-  const pageCount = useMemo(() => Math.ceil(tokenCount / gridSize), [tokenCount, gridSize])
-  const skip = useMemo(() => (pageIndex * gridSize), [pageIndex, gridSize])
-
-  const _changePage = (newPageIndex: number) => {
-    dispatchSetPageIndex(newPageIndex);
-  }
-
-  if (!isConnected) {
-    return (
-      <>
-        <Divider />
-        <p>connect your wallet to<br />manage your collection</p>
-        <ConnectButton />
-      </>
-    )
+  const _search = () => {
+    if (canSearch) {
+      goToTokenPage(searchId);
+    }
   }
 
   return (
     <>
-      <TokenGrid
-        adventurers={adventurers}
-        skip={skip}
-      />
-      <Navigation
-        pageCount={pageCount}
-        pageIndex={pageIndex}
-        onPageChange={_changePage}
-        prefix='Page'
-      />
+      <Grid>
+        <Row columns={'equal'}>
+          <Col verticalAlign={'middle'} textAlign={'center'}>
+            <b>Adventurer ID:</b>
+          </Col>
+          <Col>
+            <Input fluid placeholder='Search...' onChange={(e) => setSearchId(Number(e.target.value))} />
+          </Col>
+          <Col>
+            <Button fluid disabled={!canSearch} onClick={() => _search()}>
+              {`GO`}
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+
+      <SingleTokenTab />
     </>
-  );
+  )
 }
 

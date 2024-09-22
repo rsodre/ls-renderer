@@ -35,7 +35,6 @@ export function TokenSkuller() {
 export function Token() {
   const { tokenId } = useStateContext()
   const { name, image, attributes, isLoading } = useTokenUri(tokenId);
-  const { adventurer } = useAdventurerById(tokenId)
   return <TokenWithMetadata
     tokenId={tokenId}
     name={name}
@@ -60,7 +59,6 @@ function TokenWithMetadata({
 }) {
   const { owner } = useOwnerOf(tokenId)
   const { rendererContract } = useCurrentRendererContract(tokenId)
-  console.log('rendererContract', rendererContract)
   
   let attributesRows = useMemo(() => Object.keys(attributes ?? {}).map(key => (
     <Row key={key} columns={'equal'} className="AttributeRow">

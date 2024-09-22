@@ -49,7 +49,9 @@ export const useTokenUri = (token_id: BigNumberish) => {
   }
 
   useEffect(() => {
-    if (cached_uri) {
+    if (token_id == 0) {
+      setUri('')
+    } else if (cached_uri) {
       setUri(cached_uri)
     } else {
       _fetch();
