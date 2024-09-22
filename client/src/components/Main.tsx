@@ -11,7 +11,7 @@ import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
 import InfoPanel from "./InfoPanel";
 import { bigintEquals } from "../utils/types";
-import { useCurrentRendererContract, useOwnerOf } from "../hooks/useLootSurvivorContract";
+import { useCurrentRendererContract, useOwnerOf, useSetRendererContract } from "../hooks/useLootSurvivorContract";
 import { ConnectButton } from "./Connect";
 
 const Row = Grid.Row
@@ -125,6 +125,8 @@ function SingleTokenTab() {
   const { youOwn } = useOwnerOf(tokenId)
   const { rendererContract, isSkuller } = useCurrentRendererContract(tokenId)
   const [simulated, setSimulated] = useState(false)
+  const { write, isLoading } = useSetRendererContract(tokenId)
+
   return (
     <>
       <Grid>
@@ -141,12 +143,12 @@ function SingleTokenTab() {
           </Col>
           <Col>
             {!isSkuller &&
-              <Button fluid disabled={!youOwn} onClick={() => setSimulated(true)}>
+              <Button fluid disabled={!youOwn || isLoading} onClick={() => write(false)}>
                 {`SET SKULLER`}
               </Button>
             }
             {isSkuller &&
-              <Button fluid disabled={!youOwn} onClick={() => setSimulated(true)}>
+              <Button fluid disabled={!youOwn || isLoading} onClick={() => write(true)}>
                 {`RESTORE DEFAULT`}
               </Button>
             }

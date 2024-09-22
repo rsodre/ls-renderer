@@ -1,11 +1,12 @@
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { BigNumberish } from "starknet";
-import { useAccount, useContract, useContractRead, useContractWrite } from "@starknet-react/core";
+import { useAccount, useContractRead, useContractWrite } from "@starknet-react/core";
 import { useStateContext } from "./StateContext";
 import { useSkulllerContractAddress } from "./useSkuller";
 import { bigintEquals, bigintToHex, isPositiveBigint } from "../utils/types";
 import { networkConfig } from "../loot-survivor/networkConfig";
 import GameAbi from "../loot-survivor/abi/Game.json";
+import { useMetadataContext } from "./MetadataContext";
 
 export const useLootSurvivorGameContractAddress = () => {
   const { network } = useStateContext();
@@ -64,14 +65,45 @@ export const useCurrentRendererContract = (token_id: BigNumberish) => {
 }
 
 export const useSetRendererContract = (token_id: BigNumberish) => {
+  const { skullerContractAddress } = useSkulllerContractAddress()
   const { contractAddress } = useLootSurvivorGameContractAddress();
-  const { address } = useAccount()
+  const { dispatchSetUri } = useMetadataContext()
+
+  const [isLoading, setIsLoading] = useState(false)
   
-  // const { contract } = useContractWrite({
-  //   abi: GameAbi,
-  //   address: bigintToHex(contractAddress),
-  // });
+  const { writeAsync } = useContractWrite({
+    abis: [GameAbi],
+    calls: [{
+      contractAddress: bigintToHex(contractAddress),
+      entrypoint: 'set_adventurer_renderer',
+      calldata: [bigintToHex(token_id), bigintToHex(skullerContractAddress)],
+    }],
+  });
+
+  const { writeAsync: resetAsync } = useContractWrite({
+    abis: [GameAbi],
+    calls: [{
+      contractAddress: bigintToHex(contractAddress),
+      entrypoint: 'set_adventurer_renderer',
+      calldata: [bigintToHex(token_id), bigintToHex(0)],
+    }],
+  });
+
+  const _write = useCallback((reset: boolean) => {
+    const _finished = () => {
+      setIsLoading(false)
+      dispatchSetUri(token_id, null)
+    }
+    setIsLoading(true)
+    if (reset) {
+      resetAsync().then(() => _finished())
+    } else {
+      writeAsync().then(() => _finished())
+    }
+  }, [writeAsync, resetAsync, contractAddress, token_id, skullerContractAddress])
 
   return {
+    write: _write,
+    isLoading,
   }
 }

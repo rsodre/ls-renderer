@@ -11,7 +11,7 @@ import { BigNumberish } from 'starknet'
 //
 
 type UriMap = {
-  [key: string]: string
+  [key: string]: string | null
 }
 
 export const initialState = {
@@ -29,7 +29,7 @@ const MetadataActions = {
 type MetadataContextStateType = typeof initialState
 
 type ActionType =
-  | { type: 'SET_URI', payload: { token_id: BigNumberish, uri: string } }
+  | { type: 'SET_URI', payload: { token_id: BigNumberish, uri: string | null } }
 
 
 
@@ -87,7 +87,7 @@ export { MetadataProvider, MetadataContext, MetadataActions }
 
 export const useMetadataContext = () => {
   const { state, dispatch } = useContext(MetadataContext)
-  const dispatchSetUri = (token_id: BigNumberish, uri: string) => {
+  const dispatchSetUri = (token_id: BigNumberish, uri: string | null) => {
     dispatch({
       type: MetadataActions.SET_URI,
       payload: { token_id, uri }
