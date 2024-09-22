@@ -138,14 +138,15 @@ mod main {
             WORLD(world);
             let adventurer = Adventurer {
                 health: 600,
+                // xp: 1, // level 1
                 xp: 10000,
                 stats: Stats {
-                    strength: 2,
-                    dexterity: 4,
-                    vitality: 6,
-                    intelligence: 8,
-                    wisdom: 10,
-                    charisma: 20,
+                    strength: 0,
+                    dexterity: 1,
+                    intelligence: 2,
+                    vitality: 4,
+                    wisdom: 5,
+                    charisma: 10,
                     luck: 100
                 },
                 gold: 333,
@@ -195,6 +196,7 @@ mod main {
                 item_specials_seed: 492,
                 rank_at_death: 1,
                 current_rank: 1,
+                // current_rank: 0,
             )
         }
     }

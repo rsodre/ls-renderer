@@ -26,11 +26,13 @@ use graffiti::json::JsonImpl;
 #[inline(always)]
 fn green() -> ByteArray {"#3DEC00"}
 #[inline(always)]
-fn gold() -> ByteArray {"#ffb000"}
+fn bronze() -> ByteArray {"#A97142"}
 #[inline(always)]
 fn silver() -> ByteArray {"#AAA9AD"}
 #[inline(always)]
-fn bronze() -> ByteArray {"#A97142"}
+fn gold() -> ByteArray {"#ffb000"}
+#[inline(always)]
+fn dead_gray() -> ByteArray {"#475569"}
 #[inline(always)]
 fn black() -> ByteArray {"#000"}
 #[inline(always)]
@@ -38,17 +40,19 @@ fn white() -> ByteArray {"#ddd"}
 
 // @notice Generates a rect element
 // @return The generated rect element
-fn create_border(rank_at_death: u8, current_rank: u8) -> ByteArray {
-    "<rect x='0.5' y='0.5' width='599' height='899' rx='25' fill='black' stroke='" + rank_color(rank_at_death, current_rank) + "'/>"
+fn create_border(rank_at_death: u8, current_rank: u8, level: u8) -> ByteArray {
+    "<rect x='0.5' y='0.5' width='599' height='899' rx='25' fill='black' stroke='" + rank_color(rank_at_death, current_rank, level) + "'/>"
 }
 
 fn create_item_element(x: ByteArray, y: ByteArray, item: ByteArray) -> ByteArray {
     "<g transform='translate(" + x + "," + y + ") scale(1.5)' style='fill:" + gold() + ";'>" + item + "</g>"
 }
 
-fn rank_color(rank_at_death: u8, current_rank: u8) -> ByteArray {
+fn rank_color(rank_at_death: u8, current_rank: u8, level: u8) -> ByteArray {
     let rank = if (current_rank > rank_at_death) {current_rank} else {rank_at_death};
-    if (rank == 0) {
+    if (level == 1) {
+        dead_gray()
+    } else if (rank == 0) {
         green()
     } else if (rank == 1) {
         gold()
@@ -59,27 +63,27 @@ fn rank_color(rank_at_death: u8, current_rank: u8) -> ByteArray {
     }
 }
 
-fn generate_logo(rank_at_death: u8, current_rank: u8) -> ByteArray {
-    if (rank_at_death == 0 || current_rank > 0) {
+fn generate_logo(rank_at_death: u8, current_rank: u8, level: u8) -> ByteArray {
+    if (current_rank > 0) { // current top ranking are always green (+crown)
         "<g transform='scale(4)'>" + v0::logo() + "</g>"
     } else {
-        "<g transform='scale(4)' style='fill:" + rank_color(rank_at_death, current_rank) + ";'>" + v0::logo() + "</g>"
+        "<g transform='scale(4)' style='fill:" + rank_color(rank_at_death, 0, level) + ";'>" + v0::logo() + "</g>"
     }
 }
 
-fn generate_crown(current_rank: u8) -> ByteArray {
-    if (current_rank == 0) {
+fn generate_crown(rank_at_death: u8, current_rank: u8, level: u8) -> ByteArray {
+    if (level == 1 || current_rank == 0) {
         ""
     } else {
-        "<g transform='translate(0,-10) scale(2.68)' style='fill:" + rank_color(current_rank, 0) + ";'>" + v0::crown() + "</g>"
+        "<g transform='translate(0,-10) scale(2.68)' style='fill:" + rank_color(rank_at_death, current_rank, level) + ";'>" + v0::crown() + "</g>"
     }
 }
 
-fn create_skull(rank_at_death: u8, current_rank: u8) -> ByteArray {
+fn create_skull(rank_at_death: u8, current_rank: u8, level: u8) -> ByteArray {
     (
         "<g transform='translate(120,80) scale(4)'>" +
-        generate_logo(rank_at_death, current_rank) +
-        generate_crown(current_rank) +
+        generate_logo(rank_at_death, current_rank, level) +
+        generate_crown(rank_at_death, current_rank, level) +
         "</g>"
     )
 }
@@ -96,13 +100,13 @@ fn health() -> ByteArray {
 
 #[inline(always)]
 fn coin() -> ByteArray {
-    "<path transform='translate(-5,-2) scale(0.035)' d='m586.96 215.35v-64.566h-21.609v-21.559h-21.504v-43.062h-21.566v-21.504h-43.07v-21.559h-64.566v-21.504h-129.31v21.504h-64.566v21.559h-43.062v21.504h-21.559v43.062h-21.504v21.559h-21.559v64.566h-21.504v129.31h21.504v64.574h21.559v21.559h21.504v43.062h21.559v21.508h43.062v21.559h64.566v21.508h129.31v-21.508h64.566v-21.559h43.07v-21.508h21.566v-43.062h21.504v-21.559h21.609v-64.574h21.449v-129.31zm0 43.062v64.68'/>"
+    "<path transform='translate(-6,-2) scale(0.035)' d='m586.96 215.35v-64.566h-21.609v-21.559h-21.504v-43.062h-21.566v-21.504h-43.07v-21.559h-64.566v-21.504h-129.31v21.504h-64.566v21.559h-43.062v21.504h-21.559v43.062h-21.504v21.559h-21.559v64.566h-21.504v129.31h21.504v64.574h21.559v21.559h21.504v43.062h21.559v21.508h43.062v21.559h64.566v21.508h129.31v-21.508h64.566v-21.559h43.07v-21.508h21.566v-43.062h21.504v-21.559h21.609v-64.574h21.449v-129.31zm0 43.062v64.68'/>"
     // "<circle cx='8' cy='8' r='8'/>"
 }
 
 #[inline(always)]
 fn trophy() -> ByteArray {
-    "<path transform='translate(-2,-1) scale(1)' d='M3 3V2h2V0h7v2h2v1h-1v2h-1v2h-2v1H7V7H5V5H4V3zm4 0v1h1v2h2V1H9v1H8v1zM3 2H1v2h1v1h1v1h1v1h1v2h1v2H5v1H3v-1h2V9H4V8H3V7H2V6H1V5H0V2h1V1h2zm11 10h-2v-1h2zm-2-1h-1V9h1zm1-3v1h-1V7h1V6h1V5h1V4h1V2h1v3h-1v1h-1v1h-1v1zm3-7v1h-2V1zm-5 10v2H6v-2h1V9h3v2zm1 3v2H5v-2z'/>"
+    "<path transform='translate(-2,-2) scale(1)' d='M3 3V2h2V0h7v2h2v1h-1v2h-1v2h-2v1H7V7H5V5H4V3zm4 0v1h1v2h2V1H9v1H8v1zM3 2H1v2h1v1h1v1h1v1h1v2h1v2H5v1H3v-1h2V9H4V8H3V7H2V6H1V5H0V2h1V1h2zm11 10h-2v-1h2zm-2-1h-1V9h1zm1-3v1h-1V7h1V6h1V5h1V4h1V2h1v3h-1v1h-1v1h-1v1zm3-7v1h-2V1zm-5 10v2H6v-2h1V9h3v2zm1 3v2H5v-2z'/>"
 }
 
 #[inline(always)]
@@ -112,7 +116,9 @@ fn space() -> ByteArray {
 
 fn format_rank(rank: u8) -> ByteArray {
     let r: u8 = (rank % 10);
-    if (r == 1) {
+    if (r == 0) {
+        ""
+    } else if (r == 1) {
         format!("{}st", rank)
     } else if (r == 2) {
         format!("{}nd", rank)
@@ -139,13 +145,14 @@ fn create_stats(
     let x: u16 = 1 + index * 85;
     let y: u16 = 900 - 50 - h;
     let fill: ByteArray =
-        if (level == 1) {"#7b1e1c"}
-        else if (value <= 2) {"#247b15"}
-        else if (value <= 4) {"#237c16"}
-        else if (value < 10) {"#48f525"}
+        if (level == 1 || value == 0) {"#7b1e1c"} // red
+        else if (value <= 2) {"#805801"} // dark orange
+        else if (value <= 4) {"#247b15"} // dark green
+        else if (value < 10) {green()}
+        else if (value < 100) {gold()}
         else {gold()};
     let text_color: ByteArray =
-        if (value <= 4) {green()}
+        if (level == 1 || value <= 4) {green()}
         else {black()};
     (
         format!("<rect x='{}' y='{}' width='{}' height='{}' fill='{}' shape-rendering='crispEdges'/>", x, y, w, h, fill)
@@ -221,7 +228,9 @@ fn create_metadata(
     rank_at_death: u8,
     current_rank: u8,
 ) -> ByteArray {
-    let rect = create_border(rank_at_death, current_rank);
+    let level: u8 = adventurer.get_level();
+
+    let rect = create_border(rank_at_death, current_rank, level);
 
     let mut _name = Default::default();
     _name.append_word(adventurer_name, U256BytesUsedTraitImpl::bytes_used(adventurer_name.into()).into());
@@ -237,7 +246,6 @@ fn create_metadata(
     let _rank_at_death = format!("{}", rank_at_death);
     let _current_rank = format!("{}", current_rank);
 
-    let level: u8 = adventurer.get_level();
     let _gold = format!("{}", adventurer.gold);
     let _str = if level == 1 {"?"} else {
         format!("{}", adventurer.stats.strength)
@@ -257,7 +265,9 @@ fn create_metadata(
     let _cha = if level == 1 {"?"} else {
         format!("{}", adventurer.stats.charisma)
     };
-    let _luck = format!("{}", adventurer.stats.luck);
+    let _luck = if level == 1 {"?"} else {
+        format!("{}", adventurer.stats.luck)
+    };
 
     let _timestamp = starknet::get_block_info().unbox().block_timestamp;
     let _game_expiry_days: u8 = 10;
@@ -284,10 +294,14 @@ fn create_metadata(
     // Combine all elements
     let mut elements = array![
         rect,
-        create_skull(rank_at_death, current_rank),
+        create_skull(rank_at_death, current_rank, level),
 
-        create_text_color("#" + _adventurer_id.clone(), 570, 60, 40, white(), "end", ""),
-        create_text_color(format_rank(current_rank), 570, 105, 40, white(), "end", ""),
+        if (current_rank == 0) {
+            create_text_color("#" + _adventurer_id.clone(), 570, 105, 40, white(), "end", "")
+        } else {
+            create_text_color("#" + _adventurer_id.clone(), 570, 60, 40, white(), "end", "") +
+            create_text_color(format_rank(current_rank), 570, 105, 40, white(), "end", "")
+        },
 
         create_xp(0, "XP", _xp.clone()),
         create_xp(1, "LVL", _level.clone()),
