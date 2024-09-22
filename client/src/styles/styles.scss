@@ -209,7 +209,8 @@ canvas {
   text-decoration: line-through;
 }
 
-.Black     { color: #444; }
+.Black     { color: #000; }
+.White     { color: $color-medium!important; }
 .Important { color: $color-important!important; }
 .Bright    { color: $color-bright!important; }
 .Brightest { color: $color-brightest!important; }

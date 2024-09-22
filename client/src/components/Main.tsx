@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Grid, Button } from "semantic-ui-react";
+import { Grid, Button, Divider } from "semantic-ui-react";
 import { MetadataProvider } from "../hooks/MetadataContext";
 import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
@@ -12,6 +12,7 @@ import TokenGrid from "./TokenGrid";
 import InfoPanel from "./InfoPanel";
 import { bigintEquals } from "../utils/types";
 import { useCurrentRendererContract, useOwnerOf } from "../hooks/useLootSurvivorContract";
+import { ConnectButton } from "./Connect";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -35,17 +36,17 @@ export default function Main() {
       <Grid>
         <Row columns={'equal'}>
           <Col>
-            <Button fluid secondary toggle active={tokenSet == TokenSet.Collected} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Collected)}>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Collected} onClick={() => _changedTab(TokenSet.Collected)}>
               {`Collected (${adventurersByOwnerCount})`}
             </Button>
           </Col>
           <Col>
-            <Button fluid secondary toggle active={tokenSet == TokenSet.Search} disabled={true || !isConnected} onClick={() => _changedTab(TokenSet.Search)}>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Search} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Search)}>
               {`Search`}
             </Button>
           </Col>
           <Col>
-            <Button fluid secondary toggle active={tokenSet == TokenSet.Info} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Info)}>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Info} onClick={() => _changedTab(TokenSet.Info)}>
               {`Info`}
             </Button>
           </Col>
@@ -125,6 +126,16 @@ function MultiTokenTab({
 
   const _changePage = (newPageIndex: number) => {
     dispatchSetPageIndex(newPageIndex);
+  }
+
+  if (!isConnected) {
+    return (
+      <>
+        <Divider />
+        <p>connect your wallet to<br />manage your collection</p>
+        <ConnectButton />
+      </>
+    )
   }
 
   return (

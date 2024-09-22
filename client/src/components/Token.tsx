@@ -98,7 +98,7 @@ function TokenWithMetadata({
 
       <Row columns={'equal'} className="AttributeRow">
         <Col textAlign="center">
-          <h4>{name}</h4>
+          <h4 className='White'>{name}</h4>
         </Col>
       </Row>
 
