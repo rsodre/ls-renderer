@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { BigNumberish } from "starknet";
 import { useAccount, useContract, useContractRead, useContractWrite } from "@starknet-react/core";
 import { useStateContext } from "./StateContext";
-import { useSkulllerAContractAddress } from "./useSkuller";
+import { useSkulllerContractAddress } from "./useSkuller";
 import { bigintEquals, bigintToHex, isPositiveBigint } from "../utils/types";
 import { networkConfig } from "../loot-survivor/networkConfig";
 import GameAbi from "../loot-survivor/abi/Game.json";
@@ -48,7 +48,7 @@ export const useCurrentRendererContract = (token_id: BigNumberish) => {
     enabled: isPositiveBigint(token_id),
   });
 
-  const { skullerContractAddress } = useSkulllerAContractAddress()
+  const { skullerContractAddress } = useSkulllerContractAddress()
 
   const rendererContract = useMemo(() => (data ? bigintToHex(data as string) : null), [data]);
   const isSkuller = useMemo(() =>

@@ -6,9 +6,9 @@ import { useUriToMetadata } from "./useTokenUri";
 import { token_uri_params } from "../loot-survivor";
 import { Adventurer } from "../loot-survivor/types";
 
-export const useSkulllerAContractAddress = () => {
+export const useSkulllerContractAddress = () => {
   const { setup: { manifest } } = useDojo();
-  const skullerContractAddress = useMemo(() => getContractByName(manifest, 'skuller', 'main'), [manifest]);
+  const { address: skullerContractAddress } = useMemo(() => getContractByName(manifest, 'skuller', 'main'), [manifest]);
   return {
     skullerContractAddress
   }
