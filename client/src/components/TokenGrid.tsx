@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Grid, Icon, Image, SemanticWIDTHS } from "semantic-ui-react";
 import { BigNumberish } from "starknet";
 import { useTokenUri } from "../hooks/useTokenUri";
-import { goToTokenPage } from "../utils/karat";
+import { goToTokenPage } from "../utils/navigation";
 import { useStateContext } from "../hooks/StateContext";
 import { Adventurer } from "../loot-survivor/types";
 

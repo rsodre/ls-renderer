@@ -45,9 +45,9 @@ async function init() {
   const controller = makeController(
     dojoChainConfig.dojoConfig.manifest,
     dojoChainConfig.dojoConfig.rpcUrl,
-    'karat',
+    'skuller',
     {
-      minter: ['IMinter'],
+      minter: ['IMain'],
     },
   )
 

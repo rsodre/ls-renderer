@@ -5,7 +5,7 @@ import { useAccount } from "@starknet-react/core";
 import { useTokenIdFromUrl } from "../hooks/useTokenIdFromUrl";
 import { useAdventurersByOwner, useAdventurersByOwnerCount } from "../hooks/useLootSurvivorQuery";
 import { TokenSet, useStateContext } from "../hooks/StateContext";
-import { goToTokenPage } from "../utils/karat";
+import { goToTokenPage } from "../utils/navigation";
 import { Token, TokenSkuller } from "./Token";
 import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
