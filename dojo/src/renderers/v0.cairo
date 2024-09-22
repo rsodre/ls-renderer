@@ -526,7 +526,6 @@ mod tests {
         equipment::{Equipment, EquipmentPacking}, bag::{Bag, IBag, ImplBag}, item::{ImplItem, Item},
     };
     use beasts::{constants::BeastSettings};
-    use snforge_std::{start_cheat_block_timestamp_global};
 
 
     #[test]
@@ -585,9 +584,9 @@ mod tests {
 
         let adventurer_metadata = ImplAdventurerMetadata::new(birth_date, delay_stat_reveal, 0, 0);
 
-        start_cheat_block_timestamp_global(1721860860);
+        starknet::testing::set_block_timestamp(1721860860);
 
-        let current_1 = create_metadata(
+        let _current_1 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -598,7 +597,7 @@ mod tests {
             1
         );
 
-        let current_2 = create_metadata(
+        let _current_2 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -609,7 +608,7 @@ mod tests {
             2
         );
 
-        let current_3 = create_metadata(
+        let _current_3 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -620,7 +619,7 @@ mod tests {
             3
         );
 
-        let historical_1 = create_metadata(
+        let _historical_1 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -631,7 +630,7 @@ mod tests {
             0
         );
 
-        let historical_2 = create_metadata(
+        let _historical_2 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -642,7 +641,7 @@ mod tests {
             0
         );
 
-        let historical_3 = create_metadata(
+        let _historical_3 = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -653,7 +652,7 @@ mod tests {
             0
         );
 
-        let plain = create_metadata(
+        let _plain = create_metadata(
             1000000,
             adventurer,
             'thisisareallyreallyreallongname',
@@ -664,13 +663,13 @@ mod tests {
             0
         );
 
-        println!("Current 1: {}", current_1);
-        println!("Current 2: {}", current_2);
-        println!("Current 3: {}", current_3);
-        println!("Historical 1: {}", historical_1);
-        println!("Historical 2: {}", historical_2);
-        println!("Historical 3: {}", historical_3);
-        println!("Plain: {}", plain);
+        // println!("Current 1: {}", current_1);
+        // println!("Current 2: {}", current_2);
+        // println!("Current 3: {}", current_3);
+        // println!("Historical 1: {}", historical_1);
+        // println!("Historical 2: {}", historical_2);
+        // println!("Historical 3: {}", historical_3);
+        // println!("Plain: {}", plain);
     }
 }
 

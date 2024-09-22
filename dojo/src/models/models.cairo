@@ -11,6 +11,6 @@ pub enum Version {
 pub struct Config {
     #[key]
     pub key: u8,
-    pub loot_survivor_address: ContractAddress,
     pub version: Version,
+    pub loot_survivor_address: ContractAddress,
 }

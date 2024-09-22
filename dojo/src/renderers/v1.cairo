@@ -77,7 +77,7 @@ fn generate_crown(current_rank: u8) -> ByteArray {
 
 fn create_skull(rank_at_death: u8, current_rank: u8) -> ByteArray {
     (
-        "<g transform='translate(80,80) scale(4)'>" +
+        "<g transform='translate(120,80) scale(4)'>" +
         generate_logo(rank_at_death, current_rank) +
         generate_crown(current_rank) +
         "</g>"
@@ -89,14 +89,18 @@ fn create_skull(rank_at_death: u8, current_rank: u8) -> ByteArray {
 // SKULLER
 //
 
+#[inline(always)]
 fn health() -> ByteArray {
     "<path transform='translate(-5,-2) scale(1.3)' fill-rule='evenodd' d='M14.5 2.157v-1h-1v-1h-3v1h-1v1h-1v1h-1v-1h-1v-1h-1v-1h-3v1h-1v1h-1v4h1v2h1v1h1v1h1v1h1v1h1v1h1v1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-2h1v-4h-1Z' clip-rule='evenodd'/>"
 }
 
+#[inline(always)]
 fn coin() -> ByteArray {
     "<path transform='translate(-5,-2) scale(0.035)' d='m586.96 215.35v-64.566h-21.609v-21.559h-21.504v-43.062h-21.566v-21.504h-43.07v-21.559h-64.566v-21.504h-129.31v21.504h-64.566v21.559h-43.062v21.504h-21.559v43.062h-21.504v21.559h-21.559v64.566h-21.504v129.31h21.504v64.574h21.559v21.559h21.504v43.062h21.559v21.508h43.062v21.559h64.566v21.508h129.31v-21.508h64.566v-21.559h43.07v-21.508h21.566v-43.062h21.504v-21.559h21.609v-64.574h21.449v-129.31zm0 43.062v64.68'/>"
+    // "<circle cx='8' cy='8' r='8'/>"
 }
 
+#[inline(always)]
 fn trophy() -> ByteArray {
     "<path transform='translate(-2,-1) scale(1)' d='M3 3V2h2V0h7v2h2v1h-1v2h-1v2h-2v1H7V7H5V5H4V3zm4 0v1h1v2h2V1H9v1H8v1zM3 2H1v2h1v1h1v1h1v1h1v2h1v2H5v1H3v-1h2V9H4V8H3V7H2V6H1V5H0V2h1V1h2zm11 10h-2v-1h2zm-2-1h-1V9h1zm1-3v1h-1V7h1V6h1V5h1V4h1V2h1v3h-1v1h-1v1h-1v1zm3-7v1h-2V1zm-5 10v2H6v-2h1V9h3v2zm1 3v2H5v-2z'/>"
 }
@@ -120,7 +124,7 @@ fn format_rank(rank: u8) -> ByteArray {
 }
 
 fn create_rect(x: ByteArray, y: ByteArray, w: ByteArray, h: ByteArray, fill: ByteArray) -> ByteArray {
-    "<rect x='" + x + "' y='" + y + "' width='" + w + "' height='" + h + "' fill='" + fill + "'/>"
+    format!("<rect x='{}' y='{}' width='{}' height='{}' fill='{}'/>", x, y, w, h, fill)
 }
 
 fn create_stats(
@@ -144,36 +148,10 @@ fn create_stats(
         if (value <= 4) {green()}
         else {black()};
     (
-        "<rect x='" + format!("{}", x) + "' y='" + format!("{}", y) + "' width='" + format!("{}", w) + "' height='" + format!("{}", h) + "' fill='" + fill + "' shape-rendering='crispEdges' />"
-        + create_text_color(name, format!("{}", x + w / 2), format!("{}", y + h / 3), "30", text_color.clone(), "middle", "")
-        + create_text_color(number, format!("{}", x + w / 2), format!("{}", y + (h / 3) * 2), "35", text_color.clone(), "middle", "")
+        format!("<rect x='{}' y='{}' width='{}' height='{}' fill='{}' shape-rendering='crispEdges'/>", x, y, w, h, fill)
+        + create_text_color(name, (x + w / 2), (y + h / 3), 30, text_color.clone(), "middle", "")
+        + create_text_color(number, (x + w / 2), (y + (h / 3) * 2), 35, text_color.clone(), "middle", "")
     )
-}
-
-fn create_text_color(
-    text: ByteArray,
-    x: ByteArray,
-    y: ByteArray,
-    fontsize: ByteArray,
-    color: ByteArray,
-    text_anchor: ByteArray, // start, middle, end
-    add: ByteArray,
-) -> ByteArray {
-    "<text x='"
-        + x
-        + "' y='"
-        + y
-        + "' font-size='"
-        + fontsize
-        + "' style='fill:"
-        + color
-        + ";' text-anchor='"
-        + text_anchor
-        + "' dominant-baseline='middle' "
-        + add
-        + ">"
-        + text
-        + "</text>"
 }
 
 fn create_item(
@@ -211,6 +189,19 @@ fn create_xp_item(
     )
 }
 
+fn create_text_color(
+    text: ByteArray,
+    x: u16,
+    y: u16,
+    fontsize: u16,
+    color: ByteArray,
+    text_anchor: ByteArray, // start, middle, end
+    add: ByteArray,
+) -> ByteArray {
+    format!("<text x='{}' y='{}' font-size='{}' style='fill:{}' text-anchor='{}' dominant-baseline='middle' {}>{}</text>",
+        x, y, fontsize, color, text_anchor, add, text)
+}
+
 
 // @notice Generates adventurer metadata for the adventurer token uri
 // @param adventurer_id The adventurer's ID
@@ -233,10 +224,7 @@ fn create_metadata(
     let rect = create_border(rank_at_death, current_rank);
 
     let mut _name = Default::default();
-    _name
-        .append_word(
-            adventurer_name, U256BytesUsedTraitImpl::bytes_used(adventurer_name.into()).into()
-        );
+    _name.append_word(adventurer_name, U256BytesUsedTraitImpl::bytes_used(adventurer_name.into()).into());
 
     let _adventurer_id = format!("{}", adventurer_id);
     let _xp = format!("{}", adventurer.xp);
@@ -298,8 +286,8 @@ fn create_metadata(
         rect,
         create_skull(rank_at_death, current_rank),
 
-        create_text_color("#" + _adventurer_id.clone(), "570", "60", "40", white(), "end", ""),
-        create_text_color(format_rank(current_rank), "570", "105", "40", white(), "end", ""),
+        create_text_color("#" + _adventurer_id.clone(), 570, 60, 40, white(), "end", ""),
+        create_text_color(format_rank(current_rank), 570, 105, 40, white(), "end", ""),
 
         create_xp(0, "XP", _xp.clone()),
         create_xp(1, "LVL", _level.clone()),
@@ -307,7 +295,7 @@ fn create_metadata(
         create_xp_item(3, coin(), _gold.clone()),
         create_xp_item(4, trophy(), format_rank(rank_at_death)),
 
-        create_text_color(_name.clone(), "300", "410", "40", white(), "middle", "textLength='540'"),
+        create_text_color(_name.clone(), 300, 410, 40, white(), "middle", "textLength='540'"),
 
         create_stats(0, "STR", _str.clone(), adventurer.stats.strength, level),
         create_stats(1, "DEX", _dex.clone(), adventurer.stats.dexterity, level),
@@ -317,9 +305,9 @@ fn create_metadata(
         create_stats(5, "CHA", _cha.clone(), adventurer.stats.charisma, level),
         create_stats(6, "LUCK", _luck.clone(), adventurer.stats.luck, level),
         
-        // v0::create_text("LOOT SURVIVOR", "300", "872", "50", "middle", "middle"),
-        // create_text_color("Adventurer #" + _adventurer_id.clone(), "300", "875", "30", green(), ""),
-        create_text_color("LOOT SURVIVOR", "300", "875", "40", green(), "middle", "textLength='540'"),
+        // v0::create_text("LOOT SURVIVOR", 300, 872, 50, "middle", "middle"),
+        // create_text_color("Adventurer #" + _adventurer_id.clone(), 300, 875, 30, green(), ""),
+        create_text_color("LOOT SURVIVOR", 300, 875, 40, green(), "middle", "textLength='540'"),
 
         // equipped items
         create_item(0, _equiped_weapon.clone(), v0::weapon()),
@@ -330,8 +318,7 @@ fn create_metadata(
         create_item(5, _equiped_hand.clone(), v0::hand()),
         create_item(6, _equiped_neck.clone(), v0::neck()),
         create_item(7, _equiped_ring.clone(), v0::ring()),
-    ]
-        .span();
+    ].span();
 
     let image = v0::create_svg(v0::combine_elements(ref elements));
 
@@ -361,7 +348,6 @@ fn create_metadata(
         .add("trait", "Hours Left")
         .add("value", _hours_left)
         .build();
-
     let equipped_weapon: ByteArray = JsonImpl::new()
         .add("trait", "Weapon")
         .add("value", _equiped_weapon)
@@ -403,6 +389,12 @@ fn create_metadata(
         .add("value", _current_rank)
         .build();
 
+    // Skuller
+    let renderer_trait: ByteArray = JsonImpl::new()
+        .add("trait", "Renderer")
+        .add("value", "Skuller")
+        .build();
+
     let attributes = array![
         name,
         xp,
@@ -427,11 +419,176 @@ fn create_metadata(
         equipped_ring,
         rank_at_death_trait,
         current_rank_trait,
-    ]
-        .span();
+        renderer_trait,
+    ].span();
 
     let metadata = metadata.add_array("attributes", attributes).build();
 
     format!("data:application/json;base64,{}", bytes_base64_encode(metadata))
+    // format!("data:application/json,{}", metadata)
+}
+
+
+
+
+
+
+
+#[cfg(test)]
+mod tests {
+    use debug::PrintTrait;
+    use core::array::ArrayTrait;
+    use super::{create_metadata};
+    use adventurer::{
+        adventurer::{Adventurer, ImplAdventurer, IAdventurer}, stats::{Stats, ImplStats},
+        adventurer_meta::{AdventurerMetadata, ImplAdventurerMetadata},
+        equipment::{Equipment, EquipmentPacking}, bag::{Bag, IBag, ImplBag}, item::{ImplItem, Item},
+    };
+    use beasts::{constants::BeastSettings};
+
+
+    #[test]
+    fn test_metadata() {
+        let adventurer = Adventurer {
+            health: 1023,
+            xp: 10000,
+            stats: Stats {
+                strength: 10,
+                dexterity: 50,
+                vitality: 50,
+                intelligence: 50,
+                wisdom: 50,
+                charisma: 50,
+                luck: 100
+            },
+            gold: 1023,
+            equipment: Equipment {
+                weapon: Item { id: 42, xp: 400 },
+                chest: Item { id: 49, xp: 400 },
+                head: Item { id: 53, xp: 400 },
+                waist: Item { id: 59, xp: 400 },
+                foot: Item { id: 64, xp: 400 },
+                hand: Item { id: 69, xp: 400 },
+                neck: Item { id: 1, xp: 400 },
+                ring: Item { id: 7, xp: 400 }
+            },
+            beast_health: BeastSettings::STARTER_BEAST_HEALTH.into(),
+            stat_upgrades_available: 0,
+            battle_action_count: 0,
+            mutated: false,
+            awaiting_item_specials: false
+        };
+
+        let bag = Bag {
+            item_1: Item { id: 8, xp: 400 },
+            item_2: Item { id: 40, xp: 400 },
+            item_3: Item { id: 57, xp: 400 },
+            item_4: Item { id: 83, xp: 400 },
+            item_5: Item { id: 12, xp: 400 },
+            item_6: Item { id: 77, xp: 400 },
+            item_7: Item { id: 68, xp: 400 },
+            item_8: Item { id: 100, xp: 400 },
+            item_9: Item { id: 94, xp: 400 },
+            item_10: Item { id: 54, xp: 400 },
+            item_11: Item { id: 87, xp: 400 },
+            item_12: Item { id: 81, xp: 400 },
+            item_13: Item { id: 30, xp: 400 },
+            item_14: Item { id: 11, xp: 400 },
+            item_15: Item { id: 29, xp: 400 },
+            mutated: false
+        };
+
+        let birth_date = 1421807737;
+        let delay_stat_reveal = false;
+
+        let adventurer_metadata = ImplAdventurerMetadata::new(birth_date, delay_stat_reveal, 0, 0);
+
+        starknet::testing::set_block_timestamp(1721860860);
+
+        let _current_1 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            1,
+            1
+        );
+
+        let _current_2 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            2,
+            2
+        );
+
+        let _current_3 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            3,
+            3
+        );
+
+        let _historical_1 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            1,
+            0
+        );
+
+        let _historical_2 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            2,
+            0
+        );
+
+        let _historical_3 = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            3,
+            0
+        );
+
+        let _plain = create_metadata(
+            1000000,
+            adventurer,
+            'thisisareallyreallyreallongname',
+            adventurer_metadata,
+            bag,
+            10,
+            0,
+            0
+        );
+
+        // println!("Current 1: {}", current_1);
+        // println!("Current 2: {}", current_2);
+        // println!("Current 3: {}", current_3);
+        // println!("Historical 1: {}", historical_1);
+        // println!("Historical 2: {}", historical_2);
+        // println!("Historical 3: {}", historical_3);
+        // println!("Plain: {}", plain);
+    }
 }
 
