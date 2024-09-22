@@ -1,8 +1,8 @@
 import { DojoConfig, KATANA_ETH_CONTRACT_ADDRESS, LOCAL_KATANA, LOCAL_TORII, createDojoConfig } from "@dojoengine/core";
 import { Chain, NativeCurrency, sepolia as sn_sepolia, mainnet as sn_mainnet } from "@starknet-react/chains";
 import manifest_dev from "./generated/dev/manifest.json";
-import manifest_slot from "./generated/slot/manifest.json";
-import manifest_sepolia from "./generated/sepolia/manifest.json";
+// import manifest_slot from "./generated/slot/manifest.json";
+// import manifest_sepolia from "./generated/sepolia/manifest.json";
 import manifest_mainnet from "./generated/mainnet/manifest.json";
 import { feltToString, stringToFelt } from "../utils/starknet";
 
@@ -24,21 +24,21 @@ export const dojoConfigKatana: DojoConfig = createDojoConfig({
   toriiUrl: 'https://api.cartridge.gg/x/512karat-sepolia/torii',
 });
 
-export const dojoConfigSlot: DojoConfig = createDojoConfig({
-  manifest: manifest_slot,
-  rpcUrl: 'https://api.cartridge.gg/x/512karat-slot/katana',
-  toriiUrl: 'https://api.cartridge.gg/x/512karat-slot/torii',
-  masterAddress: '0x5c386e2791e4ba6268c80d2a6dee77e0de33be5bbf4a05a603dac9cfb9cecb3',
-  masterPrivateKey: '0x572781c71db23ea3b4b701ff11764919c8d7917d8460aebd35196309fed19b8',
-});
+// export const dojoConfigSlot: DojoConfig = createDojoConfig({
+//   manifest: manifest_slot,
+//   rpcUrl: 'https://api.cartridge.gg/x/512karat-slot/katana',
+//   toriiUrl: 'https://api.cartridge.gg/x/512karat-slot/torii',
+//   masterAddress: '0x5c386e2791e4ba6268c80d2a6dee77e0de33be5bbf4a05a603dac9cfb9cecb3',
+//   masterPrivateKey: '0x572781c71db23ea3b4b701ff11764919c8d7917d8460aebd35196309fed19b8',
+// });
 
-const dojoConfigSepolia: DojoConfig = createDojoConfig({
-  manifest: manifest_sepolia,
-  rpcUrl: 'https://api.cartridge.gg/x/starknet/sepolia',
-  toriiUrl: 'https://api.cartridge.gg/x/512karat-sepolia/torii',
-  // masterAddress: '0x0',
-  // masterPrivateKey: '0x0',
-});
+// const dojoConfigSepolia: DojoConfig = createDojoConfig({
+//   manifest: manifest_sepolia,
+//   rpcUrl: 'https://api.cartridge.gg/x/starknet/sepolia',
+//   toriiUrl: 'https://api.cartridge.gg/x/512karat-sepolia/torii',
+//   // masterAddress: '0x0',
+//   // masterPrivateKey: '0x0',
+// });
 
 const dojoConfigMainnet: DojoConfig = createDojoConfig({
   manifest: manifest_mainnet,
@@ -55,8 +55,8 @@ const dojoConfigMainnet: DojoConfig = createDojoConfig({
 
 export enum ChainId {
   KATANA_LOCAL = 'KATANA_LOCAL',
-  KARAT_SLOT = 'WP_KARAT_SLOT',
-  SN_SEPOLIA = 'SN_SEPOLIA',
+  // SKULLER_SLOT = 'WP_SKULLER_SLOT',
+  // SN_SEPOLIA = 'SN_SEPOLIA',
   SN_MAIN = 'SN_MAIN',
 }
 
@@ -79,25 +79,25 @@ export const katana: Chain = {
   },
 };
 
-export const slot: Chain = {
-  id: BigInt(stringToFelt(ChainId.KARAT_SLOT)),
-  network: "slot",
-  name: "Slot",
-  nativeCurrency: ETH_KATANA,
-  testnet: true,
-  rpcUrls: {
-    default: { http: [dojoConfigSlot.rpcUrl] },
-    public: { http: [dojoConfigSlot.rpcUrl] },
-  },
-};
+// export const slot: Chain = {
+//   id: BigInt(stringToFelt(ChainId.SKULLER_SLOT)),
+//   network: "slot",
+//   name: "Slot",
+//   nativeCurrency: ETH_KATANA,
+//   testnet: true,
+//   rpcUrls: {
+//     default: { http: [dojoConfigSlot.rpcUrl] },
+//     public: { http: [dojoConfigSlot.rpcUrl] },
+//   },
+// };
 
-export const sepolia: Chain = {
-  ...sn_sepolia,
-  rpcUrls: {
-    default: { http: [dojoConfigSepolia.rpcUrl] },
-    public: { http: [dojoConfigSepolia.rpcUrl] },
-  },
-};
+// export const sepolia: Chain = {
+//   ...sn_sepolia,
+//   rpcUrls: {
+//     default: { http: [dojoConfigSepolia.rpcUrl] },
+//     public: { http: [dojoConfigSepolia.rpcUrl] },
+//   },
+// };
 
 export const mainnet: Chain = {
   ...sn_mainnet,
@@ -121,14 +121,14 @@ export const dojoContextConfig: Record<ChainId, DojoChainConfig> = {
     chain: katana,
     dojoConfig: dojoConfigKatana,
   },
-  [ChainId.KARAT_SLOT]: {
-    chain: slot,
-    dojoConfig: dojoConfigSlot,
-  },
-  [ChainId.SN_SEPOLIA]: {
-    chain: sepolia,
-    dojoConfig: dojoConfigSepolia,
-  },
+  // [ChainId.SKULLER_SLOT]: {
+  //   chain: slot,
+  //   dojoConfig: dojoConfigSlot,
+  // },
+  // [ChainId.SN_SEPOLIA]: {
+  //   chain: sepolia,
+  //   dojoConfig: dojoConfigSepolia,
+  // },
   [ChainId.SN_MAIN]: {
     chain: mainnet,
     dojoConfig: dojoConfigMainnet,
