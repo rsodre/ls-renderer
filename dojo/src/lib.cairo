@@ -11,6 +11,9 @@ mod models {
 mod utils {
     mod encoding;
 }
+mod ls {
+    mod interfaces;
+}
 
 mod tests {
     mod test_world;

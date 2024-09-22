@@ -1,0 +1,7 @@
+tag = "skuller-main"
+writes = [
+  "skuller-Config",
+]
+init_calldata = [
+  "0x012af3b1e79b2c20a61ca4b714851ac446e48208518c655ee61f46b45e87c65c", # loot survivor game contract
+]

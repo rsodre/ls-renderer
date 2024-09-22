@@ -25,10 +25,10 @@ trait IMain {
     //
 
     // calls Loot Survivor contract to fetch adventurer data
-    // fn adventurer_token_uri(
-    //     world: @IWorldDispatcher,
-    //     adventurer_id: u256,
-    // ) -> ByteArray;
+    fn adventurer_token_uri(
+        world: @IWorldDispatcher,
+        adventurer_id: u256,
+    ) -> ByteArray;
 
     // uses dummy random data for testing
     fn simulate_token_uri(
@@ -41,17 +41,31 @@ trait IMain {
 mod main {
     use super::{IMain, WORLD};
     use starknet::{ContractAddress, get_caller_address};
-    use skuller::models::models::{Config};
+    use skuller::models::models::{Config, Version};
     use skuller::renderers::{v0, v1};
+    use skuller::ls::interfaces::{IGameDispatcher, IGameDispatcherTrait};
 
     use adventurer::{
         adventurer::{Adventurer, ImplAdventurer},
         adventurer_meta::{AdventurerMetadata, ImplAdventurerMetadata}, equipment::ImplEquipment,
+        leaderboard::{Leaderboard},
         item::{Item, ImplItem},
         equipment::{Equipment},
         stats::{Stats},
         bag::{Bag},
     };
+
+    fn dojo_init(
+        ref world: IWorldDispatcher,
+        loot_survivor_address: ContractAddress,
+    ) {
+        let config = Config {   
+            key: 1,
+            loot_survivor_address,
+            version: Version::V1,
+        };
+        set!(world, (config));
+    }
 
     #[abi(embed_v0)]
     impl MainImpl of IMain<ContractState> {
@@ -79,12 +93,43 @@ mod main {
             )
         }
 
-        // fn adventurer_token_uri(
-        //     world: @IWorldDispatcher,
-        //     adventurer_id: u256,
-        // ) -> ByteArray {
-        //     WORLD(world);
-        // }
+        fn adventurer_token_uri(
+            world: @IWorldDispatcher,
+            adventurer_id: u256,
+        ) -> ByteArray {
+            let config = get!(world, (1), Config);
+            let game = IGameDispatcher {
+                contract_address: config.loot_survivor_address,
+            };
+
+            let id = adventurer_id.try_into().unwrap();
+            let adventurer = game.get_adventurer(id);
+            let adventurer_name = game.get_adventurer_name(id);
+            let adventurer_metadata = game.get_adventurer_meta(id);
+            let bag = game.get_bag(id);
+
+            // let item_specials_seed = _get_item_specials_seed(id);
+            let item_specials_seed = 1234;
+
+            // let current_rank = _get_rank(id);
+            let leaderboard: Leaderboard = game.get_leaderboard();
+            let current_rank = 
+                if (leaderboard.first.adventurer_id == id.try_into().unwrap()) {1}
+                else if (leaderboard.second.adventurer_id == id.try_into().unwrap()) {2}
+                else if (leaderboard.third.adventurer_id == id.try_into().unwrap()) {3}
+                else {0};
+
+            self._token_uri(
+                adventurer_id,
+                adventurer,
+                adventurer_name,
+                adventurerMetadata: adventurer_metadata,
+                bag: bag,
+                item_specials_seed: item_specials_seed,
+                rank_at_death: adventurer_metadata.rank_at_death,
+                current_rank: current_rank,
+            )
+        }
     
         fn simulate_token_uri(
             world: @IWorldDispatcher,

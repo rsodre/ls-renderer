@@ -1,6 +1,6 @@
 use starknet::ContractAddress;
 
-use game::FreeGameTokenType;
+// use game::FreeGameTokenType;
 use beasts::beast::Beast;
 use market::market::{ItemPurchase};
 use adventurer::{
@@ -132,9 +132,9 @@ trait IGame<TContractState> {
     fn get_game_count(self: @TContractState) -> felt252;
     fn get_leaderboard(self: @TContractState) -> Leaderboard;
     fn get_cost_to_play(self: @TContractState) -> u128;
-    fn free_game_available(
-        self: @TContractState, token_type: FreeGameTokenType, token_id: u128
-    ) -> bool;
+    // fn free_game_available(
+    //     self: @TContractState, token_type: FreeGameTokenType, token_id: u128
+    // ) -> bool;
     fn uses_custom_renderer(self: @TContractState, adventurer_id: felt252) -> bool;
     fn get_adventurer_renderer(self: @TContractState, adventurer_id: felt252) -> ContractAddress;
     fn get_adventurer_vrf_allowance(self: @TContractState, adventurer_id: felt252) -> u128;

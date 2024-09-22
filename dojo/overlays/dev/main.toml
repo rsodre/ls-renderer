@@ -2,3 +2,6 @@ tag = "skuller-main"
 writes = [
   "skuller-Config",
 ]
+init_calldata = [
+  "0x018108b32cea514a78ef1b0e4a0753e855cdf620bc0565202c02456f618c4dc4", # loot survivor game contract
+]

@@ -14,8 +14,8 @@ const Col = Grid.Column
 
 export function TokenSkuller() {
   const { tokenId } = useStateContext()
-  // const { name, image, attributes, isLoading } = useSkulllerAdventurerTokenUri(tokenId);
-  const { name, image, attributes, isLoading } = useSkulllerSimulateTokenUri(tokenId);
+  const { name, image, attributes, isLoading } = useSkulllerAdventurerTokenUri(tokenId);
+  // const { name, image, attributes, isLoading } = useSkulllerSimulateTokenUri(tokenId);
   return <TokenWithMetadata
     tokenId={tokenId}
     name={name}
