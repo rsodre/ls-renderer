@@ -11,6 +11,7 @@ import Navigation from "./Navigation";
 import TokenGrid from "./TokenGrid";
 import InfoPanel from "./InfoPanel";
 import { bigintEquals } from "../utils/types";
+import { useCurrentRendererContract, useOwnerOf } from "../hooks/useLootSurvivorContract";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -33,14 +34,14 @@ export default function Main() {
     <MetadataProvider>
       <Grid>
         <Row columns={'equal'}>
-          {/* <Col>
-            <Button fluid secondary toggle active={tokenSet == TokenSet.Search} onClick={() => _changedTab(TokenSet.Search)}>
-              {`Collection (${allTokenIds.length})`}
-            </Button>
-          </Col> */}
           <Col>
             <Button fluid secondary toggle active={tokenSet == TokenSet.Collected} disabled={!isConnected} onClick={() => _changedTab(TokenSet.Collected)}>
               {`Collected (${adventurersByOwnerCount})`}
+            </Button>
+          </Col>
+          <Col>
+            <Button fluid secondary toggle active={tokenSet == TokenSet.Search} disabled={true || !isConnected} onClick={() => _changedTab(TokenSet.Search)}>
+              {`Search`}
             </Button>
           </Col>
           <Col>
@@ -70,6 +71,9 @@ function SingleTokenTab({
 }: {
   tokenCount: number
 }) {
+  const { tokenId } = useStateContext()
+  const { youOwn } = useOwnerOf(tokenId)
+  const { rendererContract, isSkuller } = useCurrentRendererContract(tokenId)
   const [simulated, setSimulated] = useState(false)
   return (
     <>
@@ -84,6 +88,18 @@ function SingleTokenTab({
             <Button fluid secondary toggle active={simulated} onClick={() => setSimulated(true)}>
               {`SKULLER`}
             </Button>
+          </Col>
+          <Col>
+            {!isSkuller &&
+              <Button fluid disabled={!youOwn} onClick={() => setSimulated(true)}>
+                {`SET SKULLER`}
+              </Button>
+            }
+            {isSkuller &&
+              <Button fluid disabled={!youOwn} onClick={() => setSimulated(true)}>
+                {`RESTORE DEFAULT`}
+              </Button>
+            }
           </Col>
         </Row>
       </Grid>

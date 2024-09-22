@@ -27,11 +27,14 @@ export default function App() {
               </Col>
             </Row>
 
-            <Row columns={'equal'}>
-              <Col textAlign="left" verticalAlign="bottom">
-                <h1>💀 SKULLER</h1>
+            <Row>
+              <Col width={1} textAlign="left" verticalAlign="bottom">
+                <Image src="/icons/skull_golden.svg" />
               </Col>
-              <Col textAlign="right" verticalAlign="top">
+              <Col width={7} textAlign="left" verticalAlign="bottom">
+                <h1>&nbsp;SKULLER</h1>
+              </Col>
+              <Col width={8} textAlign="right" verticalAlign="top">
                 <ConnectedHeader />
                 {!isConnected && <ConnectButton />}
               </Col>

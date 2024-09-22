@@ -5,7 +5,8 @@ import { AddressShort } from "./ui/AddressShort";
 import { useStateContext } from "../hooks/StateContext";
 import { useAdventurerById } from "../hooks/useLootSurvivorQuery";
 import { BigNumberish } from "starknet";
-import { useSkulllerASimulateTokenUri } from "../hooks/useSkuller";
+import { useSkulllerAdventurerTokenUri, useSkulllerSimulateTokenUri } from "../hooks/useSkuller";
+import { useCurrentRendererContract, useOwnerOf } from "../hooks/useLootSurvivorContract";
 
 const Row = Grid.Row
 const Col = Grid.Column
@@ -13,15 +14,14 @@ const Col = Grid.Column
 
 export function TokenSkuller() {
   const { tokenId } = useStateContext()
-  const { adventurer } = useAdventurerById(tokenId)
   // const { name, image, attributes, isLoading } = useSkulllerAdventurerTokenUri(tokenId);
-  const { name, image, attributes, isLoading } = useSkulllerASimulateTokenUri(tokenId);
+  const { name, image, attributes, isLoading } = useSkulllerSimulateTokenUri(tokenId);
   return <TokenWithMetadata
+    tokenId={tokenId}
     name={name}
     image={image}
     attributes={attributes}
     isLoading={isLoading}
-    owner={adventurer?.owner ?? 0}
   />
 }
 
@@ -30,27 +30,31 @@ export function Token() {
   const { name, image, attributes, isLoading } = useTokenUri(tokenId);
   const { adventurer } = useAdventurerById(tokenId)
   return <TokenWithMetadata
+    tokenId={tokenId}
     name={name}
     image={image}
     attributes={attributes}
     isLoading={isLoading}
-    owner={adventurer?.owner ?? 0}
   />
 }
 
 function TokenWithMetadata({
+  tokenId,
   name,
   image,
   attributes,
   isLoading,
-  owner,
 }: {
+  tokenId: BigNumberish
   name: string
   image: string
   attributes: Record<string, string>
   isLoading: boolean
-  owner: BigNumberish
 }) {
+  const { owner } = useOwnerOf(tokenId)
+  const { rendererContract } = useCurrentRendererContract(tokenId)
+  console.log('rendererContract', rendererContract)
+  
   let attributesRows = useMemo(() => Object.keys(attributes ?? {}).map(key => (
     <Row key={key} columns={'equal'} className="AttributeRow">
       <Col textAlign="left">
@@ -64,6 +68,16 @@ function TokenWithMetadata({
 
   return (
     <Grid>
+
+      {/* <Row columns={'equal'}>
+        <Col>
+          <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />
+        </Col>
+        <Col>
+          <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />
+        </Col>
+      </Row> */}
+
       <Row columns={'equal'}>
         <Col>
           <Image src={image ?? '/images/placeholder.svg'} size='big' centered spaced />

@@ -1,10 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { BigNumberish } from "starknet";
+import { getContractByName } from "@dojoengine/core";
 import { useDojo } from "../dojo/useDojo"
 import { useUriToMetadata } from "./useTokenUri";
-import { Adventurer } from "../loot-survivor/types";
 import { token_uri_params } from "../loot-survivor";
+import { Adventurer } from "../loot-survivor/types";
 
+export const useSkulllerAContractAddress = () => {
+  const { setup: { manifest } } = useDojo();
+  const skullerContractAddress = useMemo(() => getContractByName(manifest, 'skuller', 'main'), [manifest]);
+  return {
+    skullerContractAddress
+  }
+}
 
 export const useSkulllerAdventurerTokenUri = (token_id: BigNumberish) => {
   const {
@@ -46,7 +54,7 @@ export const useSkulllerAdventurerTokenUri = (token_id: BigNumberish) => {
 }
 
 
-export const useSkulllerASimulateTokenUri = (token_id: BigNumberish) => {
+export const useSkulllerSimulateTokenUri = (token_id: BigNumberish) => {
   const {
     setup: {
       systemCalls: { simulate_token_uri },

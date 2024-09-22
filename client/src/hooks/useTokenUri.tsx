@@ -3,8 +3,7 @@ import { BigNumberish } from "starknet";
 import { useContract } from "@starknet-react/core";
 import { useMetadataContext, useTokenUriContext } from "./MetadataContext";
 import { decodeMetadata } from "../utils/decoder";
-import { useStateContext } from "./StateContext";
-import { networkConfig } from "../loot-survivor/networkConfig";
+import { useLootSurvivorGameContractAddress } from "./useLootSurvivorContract";
 import GameAbi from "../loot-survivor/abi/Game.json";
 
 type MetadataType = {
@@ -19,8 +18,7 @@ type Attributes = {
 }
 
 export const useTokenUri = (token_id: BigNumberish) => {
-  const { network } = useStateContext();
-  const contractAddress = useMemo(() => (networkConfig[network!].gameAddress), [network]);
+  const { contractAddress } = useLootSurvivorGameContractAddress();
 
   const { contract } = useContract({
     abi: GameAbi,
