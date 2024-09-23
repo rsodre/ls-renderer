@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x4238753a778a55f7d1e9094a391aa37f59f7db18b8f04c6e8e50c63887b6de9"
-original_class_hash = "0x4238753a778a55f7d1e9094a391aa37f59f7db18b8f04c6e8e50c63887b6de9"
+class_hash = "0x629259832fba1f911e1cc6b14af9cc8f11b49fd7e5632777df11ed13c00e84a"
+original_class_hash = "0x629259832fba1f911e1cc6b14af9cc8f11b49fd7e5632777df11ed13c00e84a"
 base_class_hash = "0x0"
 abi = "manifests/dev/base/abis/contracts/skuller-main-71f074f3.json"
 reads = []
