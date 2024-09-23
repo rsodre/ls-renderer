@@ -195,6 +195,7 @@ mod main {
                 bag: bag,
                 item_specials_seed: 492,
                 rank_at_death: 1,
+                // rank_at_death: 0,
                 current_rank: 1,
                 // current_rank: 0,
             )

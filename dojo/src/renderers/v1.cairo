@@ -307,7 +307,9 @@ fn create_metadata(
         create_xp(1, "LVL", _level.clone()),
         create_xp_item(2, health(), _health.clone() + "/" + _max_health.clone()),
         create_xp_item(3, coin(), _gold.clone()),
-        create_xp_item(4, trophy(), format_rank(rank_at_death)),
+        if (rank_at_death > 0) {
+            create_xp_item(4, trophy(), format_rank(rank_at_death))
+        } else {""},
 
         create_text_color(_name.clone(), 300, 410, 40, white(), "middle", "textLength='540'"),
 
